@@ -1,28 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cycle Sync Planner</title>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cycle Sync Planner - Optimize your productivity with your natural rhythm">
+    <meta name="theme-color" content="#ffffff">
+    
+    <title>Cycle Sync Planner | Optimize Your Natural Rhythm</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 </head>
 <body>
+    <main>
+        <header>
+            <h1 class="flicker" aria-label="Cycle-Sync Questionnaire">
+                <span aria-hidden="true">✨</span> 
+                Cycle-Sync Questionnaire 
+                <span aria-hidden="true">✨</span>
+            </h1>
+        </header>
 
-  <h1 class="flicker">✨ Cycle-Sync Questionnaire ✨</h1>
-  <div class="container floating" id="quiz-container">
-    <!-- Question text -->
-    <h2 id="question"></h2>
-    <!-- Answer buttons -->
-    <div id="answer-buttons" class="btn-grid"></div>
-    <!-- Next button -->
-    <button id="next-btn" class="download">Next</button>
-  </div>
+        <section class="container floating" id="quiz-container" aria-live="polite">
+            <h2 id="question" class="question-text"></h2>
+            
+            <div id="answer-buttons" class="btn-grid" role="group" aria-label="Quiz options">
+                <!-- Answer buttons will be dynamically inserted here -->
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="quiz-progress"></div>
+            </div>
+            
+            <button id="next-btn" 
+                    class="download" 
+                    aria-label="Next question"
+                    disabled>
+                Next
+            </button>
+        </section>
 
-  <script src="script.js"></script>
-</body> <!-- 🛍️ Planner Download Button -->
-<div class="container floating" style="text-align: center; margin-top: 40px;">
-  <h2 class="flicker">📥 Ready to start syncing like a queen?</h2>
-  <p>Download the Cycle Sync Productivity Planner below 👇</p>
-  <a href="https://cluckmaster31.gumroad.com/l/Cycleplanner" target="_blank" class="buy-button">✨ Download Planner</a>
-</div> 
+        <section class="container floating download-section" aria-labelledby="download-title">
+            <h2 id="download-title" class="flicker">
+                <span aria-hidden="true">📥</span> 
+                Ready to start syncing like a queen?
+            </h2>
+            
+            <p>Download the Cycle Sync Productivity Planner below</p>
+            
+            <a href="https://cluckmaster31.gumroad.com/l/Cycleplanner" 
+               class="buy-button"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Download Cycle Sync Planner">
+                <span aria-hidden="true">✨</span> 
+                Download Planner
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Cycle Sync Planner. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js" defer></script>
+    
+    <!-- Add noscript fallback -->
+    <noscript>
+        <div class="noscript-message">
+            Please enable JavaScript to use this application.
+        </div>
+    </noscript>
+</body>
 </html>
+
