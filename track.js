@@ -1,244 +1,137 @@
 // track.js
-
 class TrackManager {
     constructor() {
-        this.symptoms = {
-            physical: [
-                "Cramps", "Headache", "Bloating", "Breast tenderness",
-                "Acne", "Fatigue", "Back pain", "Joint pain", "Nausea",
-                "Sleep changes", "Appetite changes", "Skin changes"
-            ],
-            emotional: [
-                "Anxiety", "Mood swings", "Irritability", "Depression",
-                "Emotional sensitivity", "Stress", "Calmness", "Joy",
-                "Motivation changes", "Focus changes", "Social energy"
-            ],
-            energy: {
-                levels: ["Very Low", "Low", "Moderate", "High", "Very High"],
-                activities: ["Rest", "Light", "Moderate", "Intense"]
+        this.section = document.getElementById('symptom-tracker');
+        // If your manager needs to access other global elements or managers,
+        // you might pass them in the constructor or get them here.
+    }
+
+    // This method will be called by script.js to set up the section
+    render() {
+        if (!this.section) {
+            console.error("TrackManager: Target section 'symptom-tracker' not found.");
+            return;
+        }
+        // console.log("TrackManager rendering content and setting up listeners.");
+
+        // Clear existing content (important if rendering multiple times)
+        this.section.innerHTML = `
+            <form id="symptomForm">
+                <div class="symptom-grid">
+                    <div class="symptom-category">
+                        <h3>Physical Symptoms</h3>
+                        <div class="symptom-checks" role="group" aria-labelledby="physical-symptoms-heading">
+                            <h4 id="physical-symptoms-heading" class="sr-only">Physical Symptoms</h4>
+                            <label><input type="checkbox" name="symptom" value="headache"> Headache</label>
+                            <label><input type="checkbox" name="symptom" value="bloating"> Bloating</label>
+                            <label><input type="checkbox" name="symptom" value="cramps"> Cramps</label>
+                            <label><input type="checkbox" name="symptom" value="fatigue"> Fatigue</label>
+                            <label><input type="checkbox" name="symptom" value="acne"> Acne</label>
+                            <label><input type="checkbox" name="symptom" value="tender_breasts"> Tender Breasts</label>
+                            <label><input type="checkbox" name="symptom" value="low_libido"> Low Libido</label>
+                            <label><input type="checkbox" name="symptom" value="high_libido"> High Libido</label>
+                        </div>
+                    </div>
+                    <div class="symptom-category">
+                        <h3>Emotional State</h3>
+                        <div class="symptom-checks" role="group" aria-labelledby="emotional-state-heading">
+                            <h4 id="emotional-state-heading" class="sr-only">Emotional State</h4>
+                            <label><input type="checkbox" name="mood" value="happy"> Happy</label>
+                            <label><input type="checkbox" name="mood" value="anxious"> Anxious</label>
+                            <label><input type="checkbox" name="mood" value="irritable"> Irritable</label>
+                            <label><input type="checkbox" name="mood" value="calm"> Calm</label>
+                            <label><input type="checkbox" name="mood" value="focused"> Focused</label>
+                            <label><input type="checkbox" name="mood" value="unmotivated"> Unmotivated</label>
+                        </div>
+                    </div>
+                    <div class="symptom-category">
+                        <h3>Energy Level</h3>
+                        <div class="energy-slider">
+                            <label for="energyLevel">Rate your energy level (1-10):</label>
+                            <input type="range" min="1" max="10" value="5" id="energyLevel" aria-valuemin="1" aria-valuemax="10" aria-valuenow="5">
+                            <span id="energyValue" aria-live="polite">5</span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" id="saveSymptoms" class="btn">Save Today's Symptoms</button>
+            </form>
+        `;
+        // Attach dynamic event listeners AFTER innerHTML has rendered the elements
+        this.addEventListeners();
+        this.loadSavedData(); // If data needs to be loaded and applied *after* rendering
+    }
+
+    addEventListeners() {
+        const symptomForm = this.section.querySelector('#symptomForm');
+        if (symptomForm) {
+            symptomForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Get form data
+                const formData = new FormData(symptomForm);
+                const symptoms = [];
+                formData.getAll('symptom').forEach(s => symptoms.push(s));
+                const moods = [];
+                formData.getAll('mood').forEach(m => moods.push(m));
+                const energyLevel = formData.get('energyLevel');
+
+                const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+                const dailyEntry = {
+                    date: today,
+                    symptoms: symptoms,
+                    moods: moods,
+                    energyLevel: energyLevel
+                };
+
+                // Save to localStorage
+                const savedEntries = JSON.parse(localStorage.getItem('dailySymptoms')) || [];
+                // Check if an entry for today already exists and update it
+                const existingIndex = savedEntries.findIndex(entry => entry.date === today);
+                if (existingIndex > -1) {
+                    savedEntries[existingIndex] = dailyEntry;
+                } else {
+                    savedEntries.push(dailyEntry);
+                }
+                localStorage.setItem('dailySymptoms', JSON.stringify(savedEntries));
+
+                alert('Symptoms saved!');
+                console.log('Daily Entry:', dailyEntry);
+                // Optionally, update the cycle tracker or UI
+            });
+        }
+
+        const energyLevelInput = this.section.querySelector('#energyLevel');
+        const energyValueSpan = this.section.querySelector('#energyValue');
+        if (energyLevelInput && energyValueSpan) {
+            energyLevelInput.addEventListener('input', () => {
+                energyValueSpan.textContent = energyLevelInput.value;
+            });
+        }
+    }
+
+    loadSavedData() {
+        // Example: Load symptoms for the current day if available and pre-fill form
+        const today = new Date().toISOString().split('T')[0];
+        const savedEntries = JSON.parse(localStorage.getItem('dailySymptoms')) || [];
+        const todayEntry = savedEntries.find(entry => entry.date === today);
+
+        if (todayEntry) {
+            // Pre-fill checkboxes
+            todayEntry.symptoms.forEach(symptom => {
+                const checkbox = this.section.querySelector(`input[name="symptom"][value="${symptom}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+            todayEntry.moods.forEach(mood => {
+                const checkbox = this.section.querySelector(`input[name="mood"][value="${mood}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+
+            // Set energy level
+            const energyLevelInput = this.section.querySelector('#energyLevel');
+            const energyValueSpan = this.section.querySelector('#energyValue');
+            if (energyLevelInput && energyValueSpan) {
+                energyLevelInput.value = todayEntry.energyLevel;
+                energyValueSpan.textContent = todayEntry.energyLevel;
             }
-        };
-        this.initializeTracker();
-    }
-
-    initializeTracker() {
-        this.renderTrackerSection(); // Render the full section structure
-        this.renderSymptomCheckboxes();
-        this.initializeEnergyActivitySelectors();
-        this.setupEventListeners();
-    }
-
-    renderTrackerSection() {
-        const symptomTrackerSection = document.getElementById('symptom-tracker');
-        if (!symptomTrackerSection) return;
-
-        symptomTrackerSection.innerHTML = `
-            <div class="container">
-                <h2>Daily Symptom Tracker</h2>
-                <div class="tracker-form glass-card">
-                    <div class="form-group">
-                        <label for="tracking-date">Date:</label>
-                        <input type="date" id="tracking-date" class="cyber-input" value="${new Date().toISOString().split('T')[0]}">
-                    </div>
-
-                    <div class="symptom-grid">
-                        <div class="symptom-category">
-                            <h3>Physical Symptoms</h3>
-                            <div class="symptom-checks" id="physical-symptoms">
-                                </div>
-                        </div>
-                        <div class="symptom-category">
-                            <h3>Emotional State</h3>
-                            <div class="symptom-checks" id="emotional-symptoms">
-                                </div>
-                        </div>
-                        <div class="symptom-category">
-                            <h3>Energy & Activity</h3>
-                            <div id="energy-activity-tracker">
-                                </div>
-                        </div>
-                    </div>
-                    <button type="button" id="save-tracking" class="cyber-button">Save Today's Tracking</button>
-                </div>
-
-                <h3>Tracking History</h3>
-                <div id="tracking-history" class="tracking-history">
-                    </div>
-            </div>
-        `;
-    }
-
-    renderSymptomCheckboxes() {
-        const physicalContainer = document.getElementById('physical-symptoms');
-        const emotionalContainer = document.getElementById('emotional-symptoms');
-
-        physicalContainer.innerHTML = this.symptoms.physical.map(symptom =>
-            this.createSymptomCheckboxHTML(symptom, 'physical')
-        ).join('');
-
-        emotionalContainer.innerHTML = this.symptoms.emotional.map(symptom =>
-            this.createSymptomCheckboxHTML(symptom, 'emotional')
-        ).join('');
-    }
-
-    createSymptomCheckboxHTML(symptom, category) {
-        const id = `${category}-${symptom.toLowerCase().replace(/\s/g, '-')}`;
-        return `
-            <div class="symptom-check">
-                <input type="checkbox" id="${id}"
-                       name="${category}-symptoms"
-                       data-symptom="${symptom}"
-                       data-category="${category}"
-                       class="cyber-checkbox">
-                <label for="${id}">${symptom}</label>
-            </div>
-        `;
-    }
-
-    initializeEnergyActivitySelectors() {
-        const energyActivityContainer = document.getElementById('energy-activity-tracker');
-        if (!energyActivityContainer) return;
-
-        energyActivityContainer.innerHTML = `
-            <div class="energy-level-selector form-group">
-                <h4>Energy Level:</h4>
-                <div class="energy-buttons">
-                    ${this.symptoms.energy.levels.map((level, index) => `
-                        <button type="button" class="energy-btn cyber-button-sm" data-level="${index + 1}">${level}</button>
-                    `).join('')}
-                </div>
-            </div>
-            <div class="activity-level-selector form-group">
-                <h4>Activity Capacity:</h4>
-                <div class="activity-buttons">
-                    ${this.symptoms.energy.activities.map((activity, index) => `
-                        <button type="button" class="activity-btn cyber-button-sm" data-activity="${index + 1}">${activity}</button>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    }
-
-    setupEventListeners() {
-        document.getElementById('save-tracking').addEventListener('click', () => this.saveTracking());
-
-        // Energy level buttons
-        document.querySelectorAll('.energy-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => this.selectEnergyLevel(e));
-        });
-
-        // Activity level buttons
-        document.querySelectorAll('.activity-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => this.selectActivityLevel(e));
-        });
-    }
-
-    selectEnergyLevel(e) {
-        document.querySelectorAll('.energy-btn').forEach(btn => btn.classList.remove('selected'));
-        e.currentTarget.classList.add('selected');
-    }
-
-    selectActivityLevel(e) {
-        document.querySelectorAll('.activity-btn').forEach(btn => btn.classList.remove('selected'));
-        e.currentTarget.classList.add('selected');
-    }
-
-    saveTracking() {
-        const date = document.getElementById('tracking-date').value;
-        const tracking = {
-            date: date,
-            physical: this.getSelectedSymptoms('physical'),
-            emotional: this.getSelectedSymptoms('emotional'),
-            energy: this.getSelectedEnergyLevel(),
-            activity: this.getSelectedActivityLevel()
-        };
-
-        if (!date) {
-            alert('Please select a date for your tracking entry.');
-            return;
         }
-
-        let trackingHistory = JSON.parse(localStorage.getItem('trackingHistory') || '[]');
-        trackingHistory.push(tracking);
-        localStorage.setItem('trackingHistory', JSON.stringify(trackingHistory));
-
-        this.clearForm();
-        this.loadTrackingHistory();
-        this.showSaveConfirmation();
-    }
-
-    getSelectedSymptoms(category) {
-        return Array.from(document.querySelectorAll(`input[name="${category}-symptoms"]:checked`))
-            .map(input => input.dataset.symptom);
-    }
-
-    getSelectedEnergyLevel() {
-        const selected = document.querySelector('.energy-btn.selected');
-        return selected ? selected.textContent : null;
-    }
-
-    getSelectedActivityLevel() {
-        const selected = document.querySelector('.activity-btn.selected');
-        return selected ? selected.textContent : null;
-    }
-
-    clearForm() {
-        document.getElementById('tracking-date').value = new Date().toISOString().split('T')[0];
-        document.querySelectorAll('.symptom-check input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
-        document.querySelectorAll('.energy-btn').forEach(btn => btn.classList.remove('selected'));
-        document.querySelectorAll('.activity-btn').forEach(btn => btn.classList.remove('selected'));
-    }
-
-    loadTrackingHistory() {
-        const entries = JSON.parse(localStorage.getItem('trackingHistory') || '[]');
-        const container = document.getElementById('tracking-history');
-
-        if (!container) return;
-
-        if (entries.length === 0) {
-            container.innerHTML = '<p class="no-entries">No tracking entries yet.</p>';
-            return;
-        }
-
-        entries.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-        container.innerHTML = entries.map(entry => this.createEntryHTML(entry)).join('');
-    }
-
-    createEntryHTML(entry) {
-        const formattedDate = new Date(entry.date).toLocaleDateString('en-GB', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-
-        return `
-            <div class="tracking-entry glass-card">
-                <div class="entry-header">
-                    <span class="entry-date">${formattedDate}</span>
-                </div>
-                <div class="entry-details">
-                    ${entry.physical.length ? `<p><strong>Physical:</strong> ${entry.physical.join(', ')}</p>` : ''}
-                    ${entry.emotional.length ? `<p><strong>Emotional:</strong> ${entry.emotional.join(', ')}</p>` : ''}
-                    ${entry.energy ? `<p><strong>Energy:</strong> ${entry.energy}</p>` : ''}
-                    ${entry.activity ? `<p><strong>Activity:</strong> ${entry.activity}</p>` : ''}
-                </div>
-                 <div class="entry-actions">
-                    <button class="edit-entry-btn cyber-button-sm" data-date="${entry.date}">Edit</button>
-                    <button class="delete-entry-btn cyber-button-sm" data-date="${entry.date}">Delete</button>
-                </div>
-            </div>
-        `;
-    }
-
-    showSaveConfirmation() {
-        const confirmation = document.createElement('div');
-        confirmation.className = 'save-confirmation notification-popup';
-        confirmation.textContent = 'Tracking saved successfully!';
-        document.body.appendChild(confirmation);
-
-        setTimeout(() => {
-            confirmation.remove();
-        }, 3000);
     }
 }
