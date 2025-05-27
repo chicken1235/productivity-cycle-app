@@ -1,129 +1,98 @@
-// Add these new features to the existing script.js
+// script.js
 
-// Symptom tracking data
-const symptoms = {
-    physical: [
-        "Cramps", "Headache", "Bloating", "Breast tenderness",
-        "Acne", "Fatigue", "Back pain", "Joint pain"
-    ],
-    emotional: [
-        "Anxiety", "Mood swings", "Irritability", "Depression",
-        "Emotional sensitivity", "Stress", "Calmness", "Joy"
-    ]
-};
+// Global function to show/hide sections
+function showSection(sectionId) {
+    document.querySelectorAll('main section').forEach(section => {
+        section.classList.add('hidden');
+    });
+    document.getElementById(sectionId).classList.remove('hidden');
+}
+
+// Event Listeners for Navigation Buttons
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Managers
     const trackManager = new TrackManager();
-    const resourceManager = new ResourceManager();
-    const settingsManager = new SettingsManager();
-    const journalManager = new JournalManager();
+    const journalManager = new JournalManager(); // Ensure journal.js is loaded
+    const resourceManager = new ResourceManager(); // Ensure resources.js is loaded
+    const settingsManager = new SettingsManager(); // Ensure settings.js is loaded
+
+    // Navigation buttons
+    document.getElementById('trackBtn').addEventListener('click', () => {
+        showSection('symptom-tracker'); // Show symptom tracker or a main dashboard
+        // If you want a more complex "Track" view, you might need a new section ID and content
+    });
+    document.getElementById('journalBtn').addEventListener('click', () => showSection('journal-section'));
+    document.getElementById('resourcesBtn').addEventListener('click', () => showSection('resources-section'));
+    document.getElementById('settingsBtn').addEventListener('click', () => showSection('settings-section'));
+
+    // Initial view: Show the product/journal section by default or a dashboard
+    showSection('journal-section'); // Or 'symptom-tracker', or a new 'dashboard-section'
+
+    // Initialize the calendar view (assuming it's part of the main tracking)
+    // You might want to move calendar initialization into TrackManager or a dedicated CalendarManager
+    initializeCalendar();
+
+    // Apply saved theme on load
+    const savedSettings = JSON.parse(localStorage.getItem('userSettings'));
+    if (savedSettings && savedSettings.theme) {
+        document.documentElement.setAttribute('data-theme', savedSettings.theme);
+    } else {
+        // Fallback to default theme if no settings are saved
+        document.documentElement.setAttribute('data-theme', 'pink');
+    }
 });
 
 
-// Initialize symptom tracker
-function initializeSymptomTracker() {
-    const physicalChecks = document.querySelector('.symptom-category:nth-child(1) .symptom-checks');
-    const emotionalChecks = document.querySelector('.symptom-category:nth-child(2) .symptom-checks');
-
-    symptoms.physical.forEach(symptom => {
-        physicalChecks.innerHTML += createSymptomCheckbox(symptom);
-    });
-
-    symptoms.emotional.forEach(symptom => {
-        emotionalChecks.innerHTML += createSymptomCheckbox(symptom);
-    });
-}
-
-function createSymptomCheckbox(symptom) {
-    return `
-        <div class="symptom-check">
-            <input type="checkbox" id="${symptom.toLowerCase()}" name="symptom">
-            <label for="${symptom.toLowerCase()}">${symptom}</label>
-        </div>
-    `;
-}
-
-// Journal functionality
-function initializeJournal() {
-    const journalBtn = document.getElementById('journalBtn');
-    const saveJournalBtn = document.getElementById('saveJournal');
-    const moodIcons = document.querySelectorAll('.mood-icon');
-
-    journalBtn.addEventListener('click', () => showSection('journal-section'));
-    saveJournalBtn.addEventListener('click', saveJournalEntry);
-    moodIcons.forEach(icon => {
-        icon.addEventListener('click', selectMood);
-    });
-}
-
-function saveJournalEntry() {
-    const date = document.getElementById('entryDate').value;
-    const text = document.getElementById('journalText').value;
-    const selectedMood = document.querySelector('.mood-icon.selected')?.dataset.mood;
-
-    if (!date || !text) {
-        alert('Please fill in both date and journal entry.');
+// Calendar functionality - keeping it global for now, but could be integrated into TrackManager
+function initializeCalendar() {
+    const calendarGrid = document.getElementById('calendar-grid');
+    if (!calendarGrid) {
+        console.warn("Calendar grid element not found. Skipping calendar initialization.");
         return;
     }
 
-    const entry = { date, text, mood: selectedMood };
-    const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
-    entries.push(entry);
-    localStorage.setItem('journalEntries', JSON.stringify(entries));
+    calendarGrid.innerHTML = ''; // Clear previous content
 
-    updateJournalHistory();
-    clearJournalForm();
-}
-
-// Calendar functionality
-function initializeCalendar() {
-    const calendar = document.getElementById('calendar-grid');
     const today = new Date();
-    const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth(); // 0-indexed
 
+    // Get number of days in current month
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    // Get the day of the week for the first day of the month (0 = Sunday, 1 = Monday, etc.)
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+
+    // Add empty divs for days before the 1st
+    for (let i = 0; i < firstDayOfMonth; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.classList.add('calendar-day', 'empty');
+        calendarGrid.appendChild(emptyDay);
+    }
+
+    // Add days of the month
     for (let i = 1; i <= daysInMonth; i++) {
         const dayEl = document.createElement('div');
         dayEl.classList.add('calendar-day');
         dayEl.textContent = i;
-        dayEl.addEventListener('click', () => selectCalendarDay(i));
-        calendar.appendChild(dayEl);
+        dayEl.setAttribute('data-day', i);
+
+        // Highlight today's date
+        if (i === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+            dayEl.classList.add('today');
+        }
+
+        // Add event listener (example: to select a day for tracking)
+        dayEl.addEventListener('click', () => selectCalendarDay(i, currentMonth, currentYear));
+        calendarGrid.appendChild(dayEl);
+    }
+
+    // Placeholder for selecting a day (you'd integrate this with TrackManager or JournalManager)
+    function selectCalendarDay(day, month, year) {
+        console.log(`Selected date: ${month + 1}/${day}/${year}`);
+        // Here you would typically trigger a form to add a symptom or journal entry for this date
+        // For example, you could pre-fill the journal date input:
+        // document.getElementById('journal-date').value = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        // showSection('journal-section');
     }
 }
-
-// Settings functionality
-function initializeSettings() {
-    const settingsBtn = document.getElementById('settingsBtn');
-    const saveSettingsBtn = document.getElementById('saveSettings');
-
-    settingsBtn.addEventListener('click', () => showSection('settings-section'));
-    saveSettingsBtn.addEventListener('click', saveSettings);
-
-    // Load saved settings
-    loadSettings();
-}
-
-function saveSettings() {
-    const settings = {
-        cycleLength: document.getElementById('cycleLength').value,
-        notifications: document.getElementById('notifications').checked,
-        theme: document.getElementById('theme').value
-    };
-
-    localStorage.setItem('settings', JSON.stringify(settings));
-    applyTheme(settings.theme);
-    alert('Settings saved successfully!');
-}
-
-// Theme functionality
-function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-}
-
-// Initialize all features
-document.addEventListener('DOMContentLoaded', () => {
-    initializeApp();
-    initializeSymptomTracker();
-    initializeJournal();
-    initializeCalendar();
-    initializeSettings();
-});
-
