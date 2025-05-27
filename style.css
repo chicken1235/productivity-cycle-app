@@ -73,7 +73,37 @@ h1, h2 {
 .flicker {
   animation: flicker 2s infinite;
 }
+/* Space out answer buttons */
+.answer-button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 14px 20px;
+  font-size: 1rem;
+  border-radius: 12px;
+  text-align: center;
+}
 
+/* Center and space the download section */
+.download-section {
+  margin-top: 4rem;
+  text-align: center;
+  padding: 2rem;
+  border: 2px dashed #ff3ec855;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Optional: section description text style */
+.section-desc {
+  color: #f8d9ff;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.85;
+}
 @keyframes flicker {
   0%, 18%, 22%, 25%, 53%, 57%, 100% {
     opacity: 1;
