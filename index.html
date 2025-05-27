@@ -3,57 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cycle Productivity</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+  <title>Cycle Sync Planner</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header>
-    <h1>⚡ CYCLE SYNCED FOCUS</h1>
-    <p>Maximize your productivity, the feminine way.</p>
-    <button class="cta">Start Questionnaire</button>
-  </header>
 
-  <section class="questionnaire" id="questionnaire">
-    <h2>🧠 Cycle Syncing Questionnaire</h2>
-    <form id="cycleForm">
-      <label>What phase are you in?
-        <select name="phase">
-          <option value="menstrual">Menstrual</option>
-          <option value="follicular">Follicular</option>
-          <option value="ovulatory">Ovulatory</option>
-          <option value="luteal">Luteal</option>
-        </select>
-      </label>
-      <label>Energy level today?
-        <input type="range" min="1" max="10" name="energy" />
-      </label>
-      <label>Focus level?
-        <input type="range" min="1" max="10" name="focus" />
-      </label>
-      <button type="submit">Get Tips</button>
-    </form>
-    <div id="results"></div>
-  </section>
+  <h1 class="flicker">✨ Cycle-Sync Questionnaire ✨</h1>
+  <div class="container floating" id="quiz-container">
+    <!-- Question text -->
+    <h2 id="question"></h2>
+    <!-- Answer buttons -->
+    <div id="answer-buttons" class="btn-grid"></div>
+    <!-- Next button -->
+    <button id="next-btn" class="download">Next</button>
+  </div>
 
-  <section class="shop">
-    <h2>🛍 Digital Products</h2>
-    <div class="product">
-      <h3>Cycle Planner (PDF)</h3>
-      <p>Track your energy & plan tasks.</p>
-      <a href="#" class="buy">Buy for $5</a>
-    </div>
-    <div class="product">
-      <h3>Focus Playlist</h3>
-      <p>Sounds tuned to your cycle phase.</p>
-     <a href="https://yourusername.gumroad.com/l/cyclesync" target="_blank" class="buy-button">
-  🛍️ Buy Cycle Sync Planner
-</a>
-    </div>
-  </section>
-
-  <footer>
-    <p>Made with 💖 for women who hustle smarter.</p>
-  </footer>
-</body>
+  <script src="script.js"></script>
+</body> <!-- 🛍️ Planner Download Button -->
+<div class="container floating" style="text-align: center; margin-top: 40px;">
+  <h2 class="flicker">📥 Ready to start syncing like a queen?</h2>
+  <p>Download the Cycle Sync Productivity Planner below 👇</p>
+  <a href="https://cluckmaster31.gumroad.com/l/Cycleplanner" target="_blank" class="buy-button">✨ Download Planner</a>
+</div> 
 </html>
