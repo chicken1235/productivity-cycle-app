@@ -1,3 +1,5 @@
+// resources.js
+
 class ResourceManager {
     constructor() {
         this.resources = {
@@ -98,29 +100,58 @@ class ResourceManager {
     }
 
     initializeResources() {
-        this.renderPhaseResources();
+        this.renderResourcesSection(); // Render the full section structure
         this.setupPhaseSelector();
+        this.renderPhaseResources('menstrual'); // Render initial phase
     }
 
-    renderPhaseResources(phase = 'menstrual') {
+    renderResourcesSection() {
+        const resourcesSection = document.getElementById('resources-section');
+        if (!resourcesSection) return;
+
+        resourcesSection.innerHTML = `
+            <div class="container">
+                <h2>Wellness Resources</h2>
+                <div class="phase-selector-wrapper">
+                    <label for="phase-selector">Select Cycle Phase:</label>
+                    <select id="phase-selector" class="cyber-input">
+                        <option value="menstrual">Menstrual Phase</option>
+                        <option value="follicular">Follicular Phase</option>
+                        <option value="ovulation">Ovulation Phase</option>
+                        <option value="luteal">Luteal Phase</option>
+                    </select>
+                </div>
+                <div id="resources-content" class="resources-grid-container">
+                    </div>
+            </div>
+        `;
+    }
+
+    renderPhaseResources(phase) {
         const container = document.getElementById('resources-content');
+        if (!container) return; // Ensure container exists
+
         const phaseData = this.resources[phase];
+        if (!phaseData) {
+            container.innerHTML = '<p>No resources found for this phase.</p>';
+            return;
+        }
 
         container.innerHTML = `
             <div class="resources-grid">
-                <div class="resource-card nutrition">
+                <div class="resource-card glass-card nutrition">
                     <h3>Nutrition Recommendations</h3>
                     <ul>
                         ${phaseData.nutrition.map(item => `<li>${item}</li>`).join('')}
                     </ul>
                 </div>
-                <div class="resource-card exercise">
+                <div class="resource-card glass-card exercise">
                     <h3>Exercise Suggestions</h3>
                     <ul>
                         ${phaseData.exercise.map(item => `<li>${item}</li>`).join('')}
                     </ul>
                 </div>
-                <div class="resource-card wellness">
+                <div class="resource-card glass-card wellness">
                     <h3>Wellness Activities</h3>
                     <ul>
                         ${phaseData.wellness.map(item => `<li>${item}</li>`).join('')}
@@ -132,8 +163,10 @@ class ResourceManager {
 
     setupPhaseSelector() {
         const selector = document.getElementById('phase-selector');
-        selector.addEventListener('change', (e) => {
-            this.renderPhaseResources(e.target.value);
-        });
+        if (selector) {
+            selector.addEventListener('change', (e) => {
+                this.renderPhaseResources(e.target.value);
+            });
+        }
     }
 }
