@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cycle Productivity</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header>
+    <h1>⚡ CYCLE SYNCED FOCUS</h1>
+    <p>Maximize your productivity, the feminine way.</p>
+    <button class="cta">Start Questionnaire</button>
+  </header>
+
+  <section class="questionnaire" id="questionnaire">
+    <h2>🧠 Cycle Syncing Questionnaire</h2>
+    <form id="cycleForm">
+      <label>What phase are you in?
+        <select name="phase">
+          <option value="menstrual">Menstrual</option>
+          <option value="follicular">Follicular</option>
+          <option value="ovulatory">Ovulatory</option>
+          <option value="luteal">Luteal</option>
+        </select>
+      </label>
+      <label>Energy level today?
+        <input type="range" min="1" max="10" name="energy" />
+      </label>
+      <label>Focus level?
+        <input type="range" min="1" max="10" name="focus" />
+      </label>
+      <button type="submit">Get Tips</button>
+    </form>
+    <div id="results"></div>
+  </section>
+
+  <section class="shop">
+    <h2>🛍 Digital Products</h2>
+    <div class="product">
+      <h3>Cycle Planner (PDF)</h3>
+      <p>Track your energy & plan tasks.</p>
+      <a href="#" class="buy">Buy for $5</a>
+    </div>
+    <div class="product">
+      <h3>Focus Playlist</h3>
+      <p>Sounds tuned to your cycle phase.</p>
+      <a href="#" class="buy">Download</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Made with 💖 for women who hustle smarter.</p>
+  </footer>
+</body>
+</html>
