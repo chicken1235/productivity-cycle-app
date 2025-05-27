@@ -11,6 +11,13 @@ const symptoms = {
         "Emotional sensitivity", "Stress", "Calmness", "Joy"
     ]
 };
+document.addEventListener('DOMContentLoaded', () => {
+    const trackManager = new TrackManager();
+    const resourceManager = new ResourceManager();
+    const settingsManager = new SettingsManager();
+    const journalManager = new JournalManager();
+});
+
 
 // Initialize symptom tracker
 function initializeSymptomTracker() {
