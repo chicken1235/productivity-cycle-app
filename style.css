@@ -1,249 +1,366 @@
+/* Cyberpunk Girly Theme */
 :root {
-    --primary-pink: #ff69b4;
-    --secondary-pink: #ffb6c1;
-    --dark-pink: #db7093;
-    --light-pink: #fff0f5;
-    --accent-pink: #ff1493;
-    --soft-pink: #ffd1dc;
-    --deep-pink: #ff1493;
-    --white: #ffffff;
-    --text-dark: #4a4a4a;
-    --shadow-pink: rgba(255, 105, 180, 0.2);
+    --neon-pink: #ff71ce;
+    --neon-blue: #01cdfe;
+    --neon-purple: #b967ff;
+    --neon-green: #05ffa1;
+    --dark-bg: #1a1a2e;
+    --darker-bg: #16161e;
+    --light-text: #ffffff;
+    --glass-bg: rgba(255, 113, 206, 0.1);
+    --glass-border: rgba(255, 113, 206, 0.2);
+    --cyber-grid: #ff71ce20;
 }
 
-/* Base Styles */
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Orbitron', sans-serif;
+}
+
 body {
-    background: var(--light-pink);
-    color: var(--text-dark);
-    font-family: 'Quicksand', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--light-text);
+    background-image: 
+        linear-gradient(var(--cyber-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--cyber-grid) 1px, transparent 1px);
+    background-size: 30px 30px;
+    position: relative;
+    overflow-x: hidden;
 }
 
-/* Navigation */
-.main-nav {
-    background: var(--white);
-    box-shadow: 0 2px 10px var(--shadow-pink);
-    border-bottom: 2px solid var(--soft-pink);
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, var(--dark-bg) 100%);
+    pointer-events: none;
+    z-index: -1;
 }
 
-.nav-logo {
-    color: var(--deep-pink);
-    text-shadow: 0 0 5px var(--shadow-pink);
-}
-
-.nav-btn {
-    color: var(--dark-pink);
-    font-weight: 500;
-}
-
-.nav-btn:hover {
-    color: var(--deep-pink);
-    background: var(--light-pink);
-    border-radius: 20px;
-}
-
-/* Symptom Tracker */
-.symptom-grid {
-    background: var(--white);
-    border: 2px solid var(--soft-pink);
-    border-radius: 15px;
-    padding: 1rem;
-}
-
-.symptom-category {
-    background: var(--light-pink);
-    border: 1px solid var(--secondary-pink);
-    box-shadow: 0 4px 8px var(--shadow-pink);
-}
-
-.symptom-check input[type="checkbox"] {
-    accent-color: var(--primary-pink);
-}
-
-.symptom-check label:hover {
-    color: var(--deep-pink);
-}
-
-/* Journal */
-.journal-entry {
-    background: var(--white);
-    border: 2px solid var(--soft-pink);
-    box-shadow: 0 4px 15px var(--shadow-pink);
-}
-
-#journalText {
-    border: 2px solid var(--secondary-pink);
-    background: var(--white);
-}
-
-#journalText:focus {
-    border-color: var(--deep-pink);
-    outline: none;
-    box-shadow: 0 0 5px var(--shadow-pink);
-}
-
-.mood-icon {
-    color: var(--dark-pink);
-}
-
-.mood-icon:hover {
-    color: var(--deep-pink);
-}
-
-.mood-icon.selected {
-    color: var(--deep-pink);
-    transform: scale(1.2);
-}
-
-/* Calendar */
-.calendar-day {
-    background: var(--white);
-    border: 1px solid var(--secondary-pink);
-    color: var(--dark-pink);
-}
-
-.calendar-day:hover {
-    background: var(--soft-pink);
-    border-color: var(--deep-pink);
-}
-
-.calendar-day.selected {
-    background: var(--primary-pink);
-    color: var(--white);
-    border-color: var(--deep-pink);
-}
-
-/* Resources */
-.resource-card {
-    background: var(--white);
-    border: 2px solid var(--soft-pink);
-    box-shadow: 0 4px 15px var(--shadow-pink);
-}
-
-.resource-card h3 {
-    color: var(--deep-pink);
-    border-bottom: 2px solid var(--soft-pink);
-    padding-bottom: 0.5rem;
-}
-
-/* Settings */
-.settings-grid {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 15px;
-    border: 2px solid var(--soft-pink);
-    box-shadow: 0 4px 15px var(--shadow-pink);
-}
-
-.setting-item {
-    border-bottom: 1px solid var(--soft-pink);
-    padding-bottom: 1rem;
-}
-
-/* Buttons */
-.btn {
-    background: linear-gradient(135deg, var(--primary-pink), var(--deep-pink));
-    color: var(--white);
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 25px;
-    font-weight: 600;
-    box-shadow: 0 4px 15px var(--shadow-pink);
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px var(--shadow-pink);
-    background: linear-gradient(135deg, var(--deep-pink), var(--primary-pink));
-}
-
-/* Form Elements */
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select {
-    border: 2px solid var(--soft-pink);
-    border-radius: 8px;
-    padding: 0.5rem;
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus,
-select:focus {
-    border-color: var(--deep-pink);
-    outline: none;
-    box-shadow: 0 0 5px var(--shadow-pink);
-}
-
-/* Headers */
+/* Typography */
 h1, h2, h3, h4 {
-    color: var(--deep-pink);
+    color: var(--neon-pink);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--neon-pink);
 }
 
-/* Progress Bars */
-.progress-container {
-    background: var(--soft-pink);
+h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    animation: glowText 2s infinite alternate;
+}
+
+/* Gumroad Product Section */
+.product-section {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent,
+        var(--neon-pink),
+        var(--neon-blue),
+        var(--neon-pink),
+        transparent
+    );
+    animation: scanline 2s linear infinite;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.product-image {
+    position: relative;
     border-radius: 10px;
     overflow: hidden;
 }
 
-.progress-bar {
-    background: linear-gradient(90deg, var(--primary-pink), var(--deep-pink));
-    height: 8px;
-    transition: width 0.3s ease;
+.product-image img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
 }
 
-/* Animations */
-@keyframes glow {
-    0% { box-shadow: 0 0 5px var(--shadow-pink); }
-    50% { box-shadow: 0 0 20px var(--primary-pink); }
-    100% { box-shadow: 0 0 5px var(--shadow-pink); }
+.product-image:hover img {
+    transform: scale(1.05);
 }
 
-.glow-effect {
-    animation: glow 2s infinite;
+.product-info {
+    padding: 2rem;
 }
 
-/* Additional Elements */
-.tag {
-    background: var(--soft-pink);
-    color: var(--deep-pink);
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.9rem;
+.product-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink);
 }
 
-.divider {
+.product-description {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    color: var(--light-text);
+}
+
+.price-tag {
+    font-size: 2.5rem;
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green);
+    margin-bottom: 2rem;
+}
+
+.buy-button {
+    background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+    color: var(--light-text);
     border: none;
-    height: 2px;
-    background: linear-gradient(90deg, 
-        transparent, 
-        var(--soft-pink),
-        var(--primary-pink),
-        var(--soft-pink),
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.buy-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px var(--neon-pink);
+}
+
+.buy-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
         transparent
     );
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+/* Features Section */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
     margin: 2rem 0;
 }
 
-/* Scrollbar */
+.feature-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    color: var(--neon-blue);
+    margin-bottom: 1rem;
+}
+
+/* Animations */
+@keyframes glowText {
+    0% { text-shadow: 0 0 10px var(--neon-pink); }
+    100% { text-shadow: 0 0 20px var(--neon-pink), 0 0 30px var(--neon-purple); }
+}
+
+@keyframes scanline {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .product-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--light-pink);
+    background: var(--darker-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-pink);
+    background: var(--neon-pink);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--deep-pink);
+    background: var(--neon-purple);
 }
+
+/* Glassmorphism Components */
+.glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 1rem 0;
+}
+
+/* Input Styles */
+input, textarea, select {
+    background: var(--darker-bg);
+    border: 1px solid var(--neon-pink);
+    color: var(--light-text);
+    padding: 0.8rem;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-blue);
+}
+
+/* Button Styles */
+.cyber-button {
+    background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+    border: none;
+    color: var(--light-text);
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.cyber-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px var(--neon-pink);
+}
+
+/* Navigation */
+.nav-menu {
+    background: var(--darker-bg);
+    border-bottom: 1px solid var(--neon-pink);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--light-text);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--neon-pink);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+/* Footer */
+footer {
+    background: var(--darker-bg);
+    border-top: 1px solid var(--neon-pink);
+    padding: 2rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.social-link {
+    color: var(--neon-pink);
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    color: var(--neon-blue);
+    transform: translateY(-2px);
+}
+
 
 
 
