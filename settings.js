@@ -1,3 +1,5 @@
+// settings.js
+
 class SettingsManager {
     constructor() {
         this.defaultSettings = {
@@ -16,8 +18,69 @@ class SettingsManager {
     }
 
     initializeSettings() {
+        this.renderSettingsForm(); // Render the full settings form
         this.loadSettings();
         this.setupEventListeners();
+    }
+
+    renderSettingsForm() {
+        const settingsSection = document.getElementById('settings-section');
+        if (!settingsSection) return;
+
+        settingsSection.innerHTML = `
+            <div class="container">
+                <h2>Preferences</h2>
+                <form id="settingsForm" class="settings-form glass-card">
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <label for="cycle-length">Average Cycle Length (days):</label>
+                            <input type="number" id="cycle-length" min="21" max="35" value="28" class="cyber-input">
+                        </div>
+                        <div class="setting-item">
+                            <label for="period-length">Average Period Length (days):</label>
+                            <input type="number" id="period-length" min="2" max="10" value="5" class="cyber-input">
+                        </div>
+                        <div class="setting-item">
+                            <label for="notifications">Enable Notifications:</label>
+                            <input type="checkbox" id="notifications" class="cyber-checkbox">
+                        </div>
+                        <div class="setting-item">
+                            <label for="theme-selector">Color Theme:</label>
+                            <select id="theme-selector" class="cyber-input">
+                                <option value="pink">Pink</option>
+                                <option value="purple">Purple</option>
+                                <option value="blue">Blue</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="language-selector">Language:</label>
+                            <select id="language-selector" class="cyber-input">
+                                <option value="en">English</option>
+                                </select>
+                        </div>
+                        <div class="setting-item reminder-group">
+                            <h4>Reminders:</h4>
+                            <div class="reminder-option">
+                                <input type="checkbox" id="reminder-period" class="cyber-checkbox">
+                                <label for="reminder-period">Period Start</label>
+                            </div>
+                            <div class="reminder-option">
+                                <input type="checkbox" id="reminder-ovulation" class="cyber-checkbox">
+                                <label for="reminder-ovulation">Ovulation</label>
+                            </div>
+                            <div class="reminder-option">
+                                <input type="checkbox" id="reminder-symptoms" class="cyber-checkbox">
+                                <label for="reminder-symptoms">Symptom Logging</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-actions">
+                        <button type="button" id="save-settings" class="cyber-button">Save Settings</button>
+                        <button type="button" id="reset-settings" class="cyber-button-secondary">Reset to Default</button>
+                    </div>
+                </form>
+            </div>
+        `;
     }
 
     loadSettings() {
@@ -32,10 +95,13 @@ class SettingsManager {
         document.getElementById('notifications').checked = settings.notifications;
         document.getElementById('theme-selector').value = settings.theme;
         document.getElementById('language-selector').value = settings.language;
-        
+
         // Reminders
         Object.keys(settings.reminders).forEach(reminder => {
-            document.getElementById(`reminder-${reminder}`).checked = settings.reminders[reminder];
+            const reminderCheckbox = document.getElementById(`reminder-${reminder}`);
+            if (reminderCheckbox) {
+                reminderCheckbox.checked = settings.reminders[reminder];
+            }
         });
     }
 
@@ -68,6 +134,7 @@ class SettingsManager {
         if (confirm('Are you sure you want to reset all settings to default?')) {
             localStorage.removeItem('userSettings');
             this.loadSettings();
+            this.showSaveConfirmation('Settings reset to default!');
         }
     }
 
@@ -76,6 +143,7 @@ class SettingsManager {
         if (settings.notifications) {
             this.requestNotificationPermission();
         }
+        // Potentially update other app aspects based on settings (e.g., calendar calculations)
     }
 
     updateTheme(theme) {
@@ -83,18 +151,22 @@ class SettingsManager {
     }
 
     async requestNotificationPermission() {
-        if ('Notification' in window) {
-            const permission = await Notification.requestPermission();
-            if (permission !== 'granted') {
-                document.getElementById('notifications').checked = false;
-            }
+        if (!('Notification' in window)) {
+            console.warn("This browser does not support notifications.");
+            return;
+        }
+
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+            document.getElementById('notifications').checked = false;
+            alert('Notification permission denied. You can re-enable it in your browser settings.');
         }
     }
 
-    showSaveConfirmation() {
+    showSaveConfirmation(message = 'Settings saved successfully!') {
         const confirmation = document.createElement('div');
-        confirmation.className = 'settings-saved-confirmation';
-        confirmation.textContent = 'Settings saved successfully!';
+        confirmation.className = 'settings-saved-confirmation notification-popup';
+        confirmation.textContent = message;
         document.body.appendChild(confirmation);
 
         setTimeout(() => {
