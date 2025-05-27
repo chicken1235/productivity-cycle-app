@@ -9,184 +9,193 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <nav class="main-nav">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="main-nav" aria-label="Main Navigation">
         <div class="nav-logo">🌸 CycleSync</div>
         <div class="nav-links">
-            <button id="trackBtn" class="nav-btn">Track</button>
-            <button id="journalBtn" class="nav-btn">Journal</button>
-            <button id="resourcesBtn" class="nav-btn">Resources</button>
-            <button id="settingsBtn" class="nav-btn">Settings</button>
+            <button id="trackBtn" class="nav-btn" aria-controls="calendar-section">Track</button>
+            <button id="journalBtn" class="nav-btn" aria-controls="journal-section">Journal</button>
+            <button id="resourcesBtn" class="nav-btn" aria-controls="resources-section">Resources</button>
+            <button id="settingsBtn" class="nav-btn" aria-controls="settings-section">Settings</button>
             <script src="track.js"></script>
-<script src="resources.js"></script>
-<script src="settings.js"></script>
-<script src="journal.js"></script>
-
+            <script src="resources.js"></script>
+            <script src="settings.js"></script>
+            <script src="journal.js"></script>
         </div>
     </nav>
 
     <header>
         <h1>🌸 Cycle Sync Guide 🌸</h1>
         <p class="subtitle">Understand and optimize your natural rhythm</p>
-        <div class="cycle-tracker">
+        <div class="cycle-tracker" aria-live="polite" aria-atomic="true">
             <div class="cycle-day">Day <span id="cycleDay">1</span></div>
-            <div class="phase-indicator">Current Phase: <span id="currentPhase">-</span></div>
+            <div class="phase-indicator">Current Phase: <span id="currentPhase">Not set</span></div>
         </div>
     </header>
 
-    <main>
-        <!-- Quiz Section -->
+    <main id="main-content">
         <section id="quiz-section" class="container">
-            <!-- Previous quiz content remains the same -->
+            <h2>Find Your Phase</h2>
+            <p>Answer a few questions to get started with understanding your current cycle phase.</p>
+            <div id="quiz-content">
+                <p>Loading quiz...</p>
+            </div>
+            </section>
+
+        <section id="symptom-tracker" class="container" aria-labelledby="symptom-tracker-heading">
+            <h2 id="symptom-tracker-heading">Daily Symptom Tracker</h2>
+            <form id="symptomForm">
+                <div class="symptom-grid">
+                    <div class="symptom-category">
+                        <h3>Physical Symptoms</h3>
+                        <div class="symptom-checks" role="group" aria-labelledby="physical-symptoms-heading">
+                            <h4 id="physical-symptoms-heading" class="sr-only">Physical Symptoms</h4>
+                            <p>Loading physical symptoms...</p>
+                        </div>
+                    </div>
+                    <div class="symptom-category">
+                        <h3>Emotional State</h3>
+                        <div class="symptom-checks" role="group" aria-labelledby="emotional-state-heading">
+                            <h4 id="emotional-state-heading" class="sr-only">Emotional State</h4>
+                            <p>Loading emotional states...</p>
+                        </div>
+                    </div>
+                    <div class="symptom-category">
+                        <h3>Energy Level</h3>
+                        <div class="energy-slider">
+                            <label for="energyLevel">Rate your energy level (1-10):</label>
+                            <input type="range" min="1" max="10" value="5" id="energyLevel" aria-valuemin="1" aria-valuemax="10" aria-valuenow="5">
+                            <span id="energyValue" aria-live="polite">5</span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" id="saveSymptoms" class="btn">Save Today's Symptoms</button>
+            </form>
         </section>
 
-        <!-- Symptom Tracker -->
-        <section id="symptom-tracker" class="container">
-            <h2>Daily Symptom Tracker</h2>
-            <div class="symptom-grid">
-                <div class="symptom-category">
-                    <h3>Physical</h3>
-                    <div class="symptom-checks">
-                        <!-- Dynamically populated -->
-                    </div>
+        <section class="product-section" id="journal-section" aria-labelledby="product-section-heading">
+            <h2 id="product-section-heading" class="sr-only">Cycle Sync Planner</h2>
+            <div class="product-grid">
+                <div class="product-image">
+                    <img src="planner-preview.jpg" alt="Cycle Sync Planner Preview - A digital planner showing various cycle tracking layouts and prompts." loading="lazy">
                 </div>
-                <div class="symptom-category">
-                    <h3>Emotional</h3>
-                    <div class="symptom-checks">
-                        <!-- Dynamically populated -->
-                    </div>
-                </div>
-                <div class="symptom-category">
-                    <h3>Energy</h3>
-                    <div class="energy-slider">
-                        <input type="range" min="1" max="10" value="5" id="energyLevel">
-                        <span id="energyValue">5</span>
-                    </div>
+                <div class="product-info">
+                    <h3 class="product-title">Cycle Sync Planner</h3>
+                    <p class="product-description">
+                        Transform your relationship with your cycle using our comprehensive digital planner.
+                        Track your phases, optimize your productivity, and align your lifestyle with your natural rhythm.
+                    </p>
+                    <div class="price-tag" aria-label="Price: $27">$27</div>
+                    <a href="https://cluckmaster31.gumroad.com/l/Cycleplanner"
+                       class="buy-button"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Get Your Planner Now on Gumroad">
+                        ✨ Get Your Planner Now ✨
+                    </a>
                 </div>
             </div>
-            <button id="saveSymptoms" class="btn">Save Today's Symptoms</button>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" role="img" aria-label="Calendar icon">📅</div>
+                    <h3>Phase Tracking</h3>
+                    <p>Track your cycle phases with beautiful calendars and insightful data.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" role="img" aria-label="Sparkle icon">✨</div>
+                    <h3>Mood Tracking</h3>
+                    <p>Monitor your emotional well-being throughout your cycle for deeper self-awareness.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" role="img" aria-label="Target icon">🎯</div>
+                    <h3>Goal Planning</h3>
+                    <p>Align your personal and professional goals with your cycle's natural energy flow.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" role="img" aria-label="Flower icon">🌸</div>
+                    <h3>Wellness Tips</h3>
+                    <p>Receive personalized, phase-specific wellness and lifestyle recommendations.</p>
+                </div>
+            </div>
         </section>
 
-        <!-- Journal Section -->
-        <section class="product-section">
-    <div class="product-grid">
-        <div class="product-image">
-            <img src="planner-preview.jpg" alt="Cycle Sync Planner Preview">
-        </div>
-        <div class="product-info">
-            <h2 class="product-title">Cycle Sync Planner</h2>
-            <p class="product-description">
-                Transform your relationship with your cycle using our comprehensive digital planner. 
-                Track your phases, optimize your productivity, and align your lifestyle with your natural rhythm.
-            </p>
-            <div class="price-tag">$27</div>
-            <a href="https://cluckmaster31.gumroad.com/l/Cycleplanner" 
-               class="buy-button" 
-               target="_blank" 
-               rel="noopener noreferrer">
-                ✨ Get Your Planner Now ✨
-            </a>
-        </div>
-    </div>
-    
-    <div class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon">📅</div>
-            <h3>Phase Tracking</h3>
-            <p>Track your cycle phases with beautiful calendars and insights</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">✨</div>
-            <h3>Mood Tracking</h3>
-            <p>Monitor your emotional wellbeing throughout your cycle</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🎯</div>
-            <h3>Goal Planning</h3>
-            <p>Align your goals with your cycle's natural energy flow</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🌸</div>
-            <h3>Wellness Tips</h3>
-            <p>Get phase-specific wellness and lifestyle recommendations</p>
-        </div>
-    </div>
-</section>
-
-       <!-- Resources Section -->
-        <section id="resources-section" class="container hidden">
-            <h2>Wellness Resources</h2>
+        <section id="resources-section" class="container hidden" aria-labelledby="resources-section-heading">
+            <h2 id="resources-section-heading">Wellness Resources</h2>
             <div class="resources-grid">
                 <div class="resource-card">
                     <h3>Nutrition Guide</h3>
                     <div class="phase-nutrition">
-                        <!-- Dynamically populated -->
+                        <p>Loading nutrition recommendations...</p>
                     </div>
                 </div>
                 <div class="resource-card">
                     <h3>Exercise Recommendations</h3>
                     <div class="phase-exercise">
-                        <!-- Dynamically populated -->
+                        <p>Loading exercise recommendations...</p>
                     </div>
                 </div>
                 <div class="resource-card">
                     <h3>Meditation & Mindfulness</h3>
                     <div class="mindfulness-tips">
-                        <!-- Dynamically populated -->
+                        <p>Loading mindfulness tips...</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Settings Section -->
-        <section id="settings-section" class="container hidden">
-            <h2>Preferences</h2>
-            <div class="settings-grid">
-                <div class="setting-item">
-                    <label for="cycleLength">Average Cycle Length:</label>
-                    <input type="number" id="cycleLength" min="21" max="35" value="28">
+        <section id="settings-section" class="container hidden" aria-labelledby="settings-section-heading">
+            <h2 id="settings-section-heading">Preferences</h2>
+            <form id="settingsForm">
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="cycleLength">Average Cycle Length (days):</label>
+                        <input type="number" id="cycleLength" name="cycleLength" min="21" max="35" value="28" aria-describedby="cycle-length-description">
+                        <p id="cycle-length-description" class="sr-only">Enter your average cycle length in days, typically between 21 and 35 days.</p>
+                    </div>
+                    <div class="setting-item">
+                        <label for="notifications">Enable Notifications:</label>
+                        <input type="checkbox" id="notifications" name="notifications">
+                    </div>
+                    <div class="setting-item">
+                        <label for="theme">Color Theme:</label>
+                        <select id="theme" name="theme">
+                            <option value="pink">Pink</option>
+                            <option value="purple">Purple</option>
+                            <option value="blue">Blue</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="setting-item">
-                    <label for="notifications">Enable Notifications:</label>
-                    <input type="checkbox" id="notifications">
-                </div>
-                <div class="setting-item">
-                    <label for="theme">Color Theme:</label>
-                    <select id="theme">
-                        <option value="pink">Pink</option>
-                        <option value="purple">Purple</option>
-                        <option value="blue">Blue</option>
-                    </select>
-                </div>
-            </div>
-            <button id="saveSettings" class="btn">Save Settings</button>
+                <button type="submit" id="saveSettings" class="btn">Save Settings</button>
+            </form>
         </section>
 
-        <!-- Calendar View -->
-        <section id="calendar-section" class="container">
-            <h2>Cycle Calendar</h2>
+        <section id="calendar-section" class="container" aria-labelledby="calendar-section-heading">
+            <h2 id="calendar-section-heading">Cycle Calendar</h2>
             <div id="calendar-grid">
-                <!-- Dynamically populated -->
+                <p>Loading calendar...</p>
             </div>
         </section>
     </main>
 
-    <footer>
+    <footer role="contentinfo">
         <div class="footer-content">
-            <div class="footer-section">
-                <h4>Quick Links</h4>
+            <nav class="footer-section" aria-labelledby="footer-quick-links-heading">
+                <h4 id="footer-quick-links-heading">Quick Links</h4>
                 <ul>
                     <li><a href="#quiz-section">Phase Finder</a></li>
                     <li><a href="#symptom-tracker">Symptom Tracker</a></li>
-                    <li><a href="#journal-section">Journal</a></li>
+                    <li><a href="#journal-section">Planner</a></li>
                     <li><a href="#resources-section">Resources</a></li>
                 </ul>
-            </div>
+            </nav>
             <div class="footer-section">
-                <h4>Connect</h4>
+                <h4>Connect With Us</h4>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Visit us on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Visit us on Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Visit us on Twitter"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
@@ -196,4 +205,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
