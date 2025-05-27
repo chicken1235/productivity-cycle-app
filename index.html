@@ -3,83 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cycle Sync Planner - Optimize your productivity with your natural rhythm">
-    <meta name="theme-color" content="#ffffff">
-    
-    <title>Cycle Sync Planner | Optimize Your Natural Rhythm</title>
-    
-    <!-- Preload critical assets -->
-    <link rel="preload" href="style.css" as="style">
-    <link rel="preload" href="script.js" as="script">
-    
-    <!-- Stylesheets -->
+    <meta name="description" content="Cycle Sync Planner - Track and optimize your menstrual cycle phases">
+    <title>Cycle Sync Guide</title>
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <main>
-        <header>
-            <h1 class="flicker" aria-label="Cycle-Sync Questionnaire">
-                <span aria-hidden="true">✨</span> 
-                Cycle-Sync Questionnaire 
-                <span aria-hidden="true">✨</span>
-            </h1>
-        </header>
+    <nav class="main-nav">
+        <div class="nav-logo">🌸 CycleSync</div>
+        <div class="nav-links">
+            <button id="trackBtn" class="nav-btn">Track</button>
+            <button id="journalBtn" class="nav-btn">Journal</button>
+            <button id="resourcesBtn" class="nav-btn">Resources</button>
+            <button id="settingsBtn" class="nav-btn">Settings</button>
+        </div>
+    </nav>
 
-        <section class="container floating" id="quiz-container" aria-live="polite">
-            <h2 id="question" class="question-text"></h2>
-            
-            <div id="answer-buttons" class="btn-grid" role="group" aria-label="Quiz options">
-                <!-- Answer buttons will be dynamically inserted here -->
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="quiz-progress"></div>
-            </div>
-            
-            <button id="next-btn" 
-                    class="download" 
-                    aria-label="Next question"
-                    disabled>
-                Next
-            </button>
+    <header>
+        <h1>🌸 Cycle Sync Guide 🌸</h1>
+        <p class="subtitle">Understand and optimize your natural rhythm</p>
+        <div class="cycle-tracker">
+            <div class="cycle-day">Day <span id="cycleDay">1</span></div>
+            <div class="phase-indicator">Current Phase: <span id="currentPhase">-</span></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Quiz Section -->
+        <section id="quiz-section" class="container">
+            <!-- Previous quiz content remains the same -->
         </section>
 
-        <section class="container floating download-section" aria-labelledby="download-title">
-            <h2 id="download-title" class="flicker">
-                <span aria-hidden="true">📥</span> 
-                Ready to start syncing like a queen?
-            </h2>
-            
-            <p>Download the Cycle Sync Productivity Planner below</p>
-            
-            <a href="https://cluckmaster31.gumroad.com/l/Cycleplanner" 
-               class="buy-button"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="Download Cycle Sync Planner">
-                <span aria-hidden="true">✨</span> 
-                Download Planner
-            </a>
+        <!-- Symptom Tracker -->
+        <section id="symptom-tracker" class="container">
+            <h2>Daily Symptom Tracker</h2>
+            <div class="symptom-grid">
+                <div class="symptom-category">
+                    <h3>Physical</h3>
+                    <div class="symptom-checks">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+                <div class="symptom-category">
+                    <h3>Emotional</h3>
+                    <div class="symptom-checks">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+                <div class="symptom-category">
+                    <h3>Energy</h3>
+                    <div class="energy-slider">
+                        <input type="range" min="1" max="10" value="5" id="energyLevel">
+                        <span id="energyValue">5</span>
+                    </div>
+                </div>
+            </div>
+            <button id="saveSymptoms" class="btn">Save Today's Symptoms</button>
+        </section>
+
+        <!-- Journal Section -->
+        <section id="journal-section" class="container hidden">
+            <h2>Cycle Journal</h2>
+            <div class="journal-entry">
+                <input type="date" id="entryDate">
+                <textarea id="journalText" placeholder="How are you feeling today?"></textarea>
+                <div class="mood-selector">
+                    <span>Mood:</span>
+                    <div class="mood-icons">
+                        <i class="fas fa-smile mood-icon" data-mood="happy"></i>
+                        <i class="fas fa-meh mood-icon" data-mood="neutral"></i>
+                        <i class="fas fa-frown mood-icon" data-mood="sad"></i>
+                        <i class="fas fa-angry mood-icon" data-mood="irritated"></i>
+                        <i class="fas fa-heart mood-icon" data-mood="loving"></i>
+                    </div>
+                </div>
+                <button id="saveJournal" class="btn">Save Entry</button>
+            </div>
+            <div class="journal-history">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources-section" class="container hidden">
+            <h2>Wellness Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>Nutrition Guide</h3>
+                    <div class="phase-nutrition">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <h3>Exercise Recommendations</h3>
+                    <div class="phase-exercise">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <h3>Meditation & Mindfulness</h3>
+                    <div class="mindfulness-tips">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="container hidden">
+            <h2>Preferences</h2>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <label for="cycleLength">Average Cycle Length:</label>
+                    <input type="number" id="cycleLength" min="21" max="35" value="28">
+                </div>
+                <div class="setting-item">
+                    <label for="notifications">Enable Notifications:</label>
+                    <input type="checkbox" id="notifications">
+                </div>
+                <div class="setting-item">
+                    <label for="theme">Color Theme:</label>
+                    <select id="theme">
+                        <option value="pink">Pink</option>
+                        <option value="purple">Purple</option>
+                        <option value="blue">Blue</option>
+                    </select>
+                </div>
+            </div>
+            <button id="saveSettings" class="btn">Save Settings</button>
+        </section>
+
+        <!-- Calendar View -->
+        <section id="calendar-section" class="container">
+            <h2>Cycle Calendar</h2>
+            <div id="calendar-grid">
+                <!-- Dynamically populated -->
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; <script>document.write(new Date().getFullYear())</script> Cycle Sync Planner. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#quiz-section">Phase Finder</a></li>
+                    <li><a href="#symptom-tracker">Symptom Tracker</a></li>
+                    <li><a href="#journal-section">Journal</a></li>
+                    <li><a href="#resources-section">Resources</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">💗 Created with love for cycle awareness 💗</p>
     </footer>
 
-    <!-- Scripts -->
-    <script src="script.js" defer></script>
-    
-    <!-- Add noscript fallback -->
-    <noscript>
-        <div class="noscript-message">
-            Please enable JavaScript to use this application.
-        </div>
-    </noscript>
+    <script src="script.js"></script>
 </body>
 </html>
 
