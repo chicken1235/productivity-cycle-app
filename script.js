@@ -1,200 +1,122 @@
-const questions = [
-    {
-        question: "Which phase are you currently in?",
-        answers: [
-            { text: "Menstrual (Day 1-5)", phase: "menstrual", info: "Time for rest and reflection" },
-            { text: "Follicular (Day 6-14)", phase: "follicular", info: "Energy is building" },
-            { text: "Ovulation (Day 14-17)", phase: "ovulation", info: "Peak energy and confidence" },
-            { text: "Luteal (Day 18-28)", phase: "luteal", info: "Winding down and organizing" }
-        ]
-    },
-    {
-        question: "How's your energy level today?",
-        answers: [
-            { text: "Low & introspective", phase: "menstrual", info: "Perfect for gentle activities" },
-            { text: "Rising & creative", phase: "follicular", info: "Great for starting new projects" },
-            { text: "High & outgoing", phase: "ovulation", info: "Ideal for social activities" },
-            { text: "Steady but decreasing", phase: "luteal", info: "Focus on completion tasks" }
-        ]
-    },
-    {
-        question: "What's your current mood?",
-        answers: [
-            { text: "Reflective & quiet", phase: "menstrual" },
-            { text: "Optimistic & excited", phase: "follicular" },
-            { text: "Confident & social", phase: "ovulation" },
-            { text: "Detail-oriented & analytical", phase: "luteal" }
-        ]
-    },
-    {
-        question: "How's your focus today?",
-        answers: [
-            { text: "Dreamy & intuitive", phase: "menstrual" },
-            { text: "Creative & scattered", phase: "follicular" },
-            { text: "Sharp & clear", phase: "ovulation" },
-            { text: "Detail-oriented & precise", phase: "luteal" }
-        ]
-    },
-    {
-        question: "What type of exercise feels right?",
-        answers: [
-            { text: "Gentle yoga or rest", phase: "menstrual" },
-            { text: "Light cardio & dance", phase: "follicular" },
-            { text: "High intensity & strength", phase: "ovulation" },
-            { text: "Moderate strength & pilates", phase: "luteal" }
-        ]
-    },
-    {
-        question: "What's your ideal work environment today?",
-        answers: [
-            { text: "Quiet & solitary", phase: "menstrual" },
-            { text: "Creative & inspiring", phase: "follicular" },
-            { text: "Collaborative & social", phase: "ovulation" },
-            { text: "Organized & structured", phase: "luteal" }
-        ]
-    },
-    {
-        question: "What kind of tasks appeal to you?",
-        answers: [
-            { text: "Planning & reflection", phase: "menstrual" },
-            { text: "Brainstorming & creating", phase: "follicular" },
-            { text: "Presenting & networking", phase: "ovulation" },
-            { text: "Organizing & completing", phase: "luteal" }
-        ]
-    }
-];
+// Add these new features to the existing script.js
 
-let currentQuestionIndex = 0;
-let userAnswers = [];
-let selectedPhase = null;
+// Symptom tracking data
+const symptoms = {
+    physical: [
+        "Cramps", "Headache", "Bloating", "Breast tenderness",
+        "Acne", "Fatigue", "Back pain", "Joint pain"
+    ],
+    emotional: [
+        "Anxiety", "Mood swings", "Irritability", "Depression",
+        "Emotional sensitivity", "Stress", "Calmness", "Joy"
+    ]
+};
 
-const questionEl = document.getElementById("question");
-const answerButtons = document.getElementById("answer-buttons");
-const nextButton = document.getElementById("next-btn");
-const progressBar = document.getElementById("quiz-progress");
+// Initialize symptom tracker
+function initializeSymptomTracker() {
+    const physicalChecks = document.querySelector('.symptom-category:nth-child(1) .symptom-checks');
+    const emotionalChecks = document.querySelector('.symptom-category:nth-child(2) .symptom-checks');
 
-function startQuiz() {
-    currentQuestionIndex = 0;
-    userAnswers = [];
-    nextButton.innerText = "Next";
-    showQuestion();
-    updateProgressBar();
-}
+    symptoms.physical.forEach(symptom => {
+        physicalChecks.innerHTML += createSymptomCheckbox(symptom);
+    });
 
-function showQuestion() {
-    resetState();
-    let currentQuestion = questions[currentQuestionIndex];
-    questionEl.innerText = currentQuestion.question;
-
-    currentQuestion.answers.forEach(answer => {
-        const button = document.createElement("button");
-        button.innerText = answer.text;
-        button.classList.add("download", "floating");
-        button.dataset.phase = answer.phase;
-        
-        button.addEventListener("click", () => {
-            selectAnswer(answer);
-            highlightSelected(button);
-            nextButton.disabled = false;
-        });
-        
-        answerButtons.appendChild(button);
+    symptoms.emotional.forEach(symptom => {
+        emotionalChecks.innerHTML += createSymptomCheckbox(symptom);
     });
 }
 
-function selectAnswer(answer) {
-    userAnswers[currentQuestionIndex] = answer.phase;
-    selectedPhase = answer.phase;
-    nextButton.style.display = "block";
-}
-
-function highlightSelected(selectedButton) {
-    const buttons = answerButtons.getElementsByTagName("button");
-    for (let button of buttons) {
-        button.classList.remove("selected");
-    }
-    selectedButton.classList.add("selected");
-}
-
-function updateProgressBar() {
-    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-    progressBar.style.width = `${progress}%`;
-}
-
-function resetState() {
-    nextButton.style.display = "none";
-    nextButton.disabled = true;
-    answerButtons.innerHTML = "";
-    selectedPhase = null;
-}
-
-function analyzePhaseTrend() {
-    const phaseCounts = userAnswers.reduce((acc, phase) => {
-        acc[phase] = (acc[phase] || 0) + 1;
-        return acc;
-    }, {});
-    
-    return Object.entries(phaseCounts)
-        .sort((a, b) => b[1] - a[1])[0][0];
-}
-
-function getPhaseRecommendations(phase) {
-    const recommendations = {
-        menstrual: {
-            focus: "Rest and reflection",
-            activities: "Journaling, meditation, gentle movement",
-            work: "Planning, research, independent work"
-        },
-        follicular: {
-            focus: "New beginnings and creativity",
-            activities: "Brainstorming, learning new skills, light exercise",
-            work: "Starting projects, creative tasks, planning"
-        },
-        ovulation: {
-            focus: "Communication and connection",
-            activities: "Networking, presentations, high-energy exercise",
-            work: "Team projects, client meetings, public speaking"
-        },
-        luteal: {
-            focus: "Completion and organization",
-            activities: "Organizing, detailed work, moderate exercise",
-            work: "Finishing projects, administrative tasks, evaluation"
-        }
-    };
-    
-    return recommendations[phase];
-}
-
-nextButton.addEventListener("click", () => {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-        showQuestion();
-        updateProgressBar();
-    } else {
-        showSummary();
-    }
-});
-
-function showSummary() {
-    resetState();
-    const dominantPhase = analyzePhaseTrend();
-    const recommendations = getPhaseRecommendations(dominantPhase);
-    
-    questionEl.innerHTML = `
-        <h3>✨ Your Cycle Sync Results ✨</h3>
-        <p>Based on your answers, you're showing strong ${dominantPhase} phase tendencies.</p>
-        <div class="recommendations">
-            <p><strong>Focus areas:</strong> ${recommendations.focus}</p>
-            <p><strong>Suggested activities:</strong> ${recommendations.activities}</p>
-            <p><strong>Work optimization:</strong> ${recommendations.work}</p>
+function createSymptomCheckbox(symptom) {
+    return `
+        <div class="symptom-check">
+            <input type="checkbox" id="${symptom.toLowerCase()}" name="symptom">
+            <label for="${symptom.toLowerCase()}">${symptom}</label>
         </div>
     `;
-    
-    nextButton.innerText = "Start Over";
-    nextButton.style.display = "block";
-    nextButton.onclick = startQuiz;
 }
 
-// Initialize quiz
-startQuiz();
+// Journal functionality
+function initializeJournal() {
+    const journalBtn = document.getElementById('journalBtn');
+    const saveJournalBtn = document.getElementById('saveJournal');
+    const moodIcons = document.querySelectorAll('.mood-icon');
+
+    journalBtn.addEventListener('click', () => showSection('journal-section'));
+    saveJournalBtn.addEventListener('click', saveJournalEntry);
+    moodIcons.forEach(icon => {
+        icon.addEventListener('click', selectMood);
+    });
+}
+
+function saveJournalEntry() {
+    const date = document.getElementById('entryDate').value;
+    const text = document.getElementById('journalText').value;
+    const selectedMood = document.querySelector('.mood-icon.selected')?.dataset.mood;
+
+    if (!date || !text) {
+        alert('Please fill in both date and journal entry.');
+        return;
+    }
+
+    const entry = { date, text, mood: selectedMood };
+    const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    entries.push(entry);
+    localStorage.setItem('journalEntries', JSON.stringify(entries));
+
+    updateJournalHistory();
+    clearJournalForm();
+}
+
+// Calendar functionality
+function initializeCalendar() {
+    const calendar = document.getElementById('calendar-grid');
+    const today = new Date();
+    const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+
+    for (let i = 1; i <= daysInMonth; i++) {
+        const dayEl = document.createElement('div');
+        dayEl.classList.add('calendar-day');
+        dayEl.textContent = i;
+        dayEl.addEventListener('click', () => selectCalendarDay(i));
+        calendar.appendChild(dayEl);
+    }
+}
+
+// Settings functionality
+function initializeSettings() {
+    const settingsBtn = document.getElementById('settingsBtn');
+    const saveSettingsBtn = document.getElementById('saveSettings');
+
+    settingsBtn.addEventListener('click', () => showSection('settings-section'));
+    saveSettingsBtn.addEventListener('click', saveSettings);
+
+    // Load saved settings
+    loadSettings();
+}
+
+function saveSettings() {
+    const settings = {
+        cycleLength: document.getElementById('cycleLength').value,
+        notifications: document.getElementById('notifications').checked,
+        theme: document.getElementById('theme').value
+    };
+
+    localStorage.setItem('settings', JSON.stringify(settings));
+    applyTheme(settings.theme);
+    alert('Settings saved successfully!');
+}
+
+// Theme functionality
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+}
+
+// Initialize all features
+document.addEventListener('DOMContentLoaded', () => {
+    initializeApp();
+    initializeSymptomTracker();
+    initializeJournal();
+    initializeCalendar();
+    initializeSettings();
+});
 
