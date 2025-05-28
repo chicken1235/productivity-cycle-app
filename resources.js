@@ -3,21 +3,22 @@
 class ResourceManager {
     constructor() {
         this.section = document.getElementById('resources-section');
-        // If there's data to load, initialize it here
+        this.resourcesContentDiv = document.getElementById('resources-content'); // New content div
         this.resourcesData = [
-            { title: "Understanding Your Follicular Phase", description: "Learn about the energy and focus that define this phase.", link: "#" },
-            { title: "Nutrition for Luteal Phase Comfort", description: "Foods that can help ease PMS symptoms.", link: "#" },
-            { title: "Gentle Movement for Menstrual Phase", description: "Support your body during menstruation with mindful exercise.", link: "#" },
-            { title: "Cycle Syncing for Productivity", description: "Maximize your work flow by aligning with your cycle.", link: "#" }
+            { title: "Understanding Your Follicular Phase", description: "Learn about the energy and focus that define this phase, ideal for new projects and challenging tasks.", link: "#" },
+            { title: "Nutrition for Luteal Phase Comfort", description: "Discover foods and dietary tips to help ease common pre-menstrual symptoms like bloating and cravings.", link: "#" },
+            { title: "Gentle Movement for Menstrual Phase", description: "Support your body during menstruation with mindful exercise, focusing on rest and restoration.", link: "#" },
+            { title: "Cycle Syncing for Productivity", description: "Maximize your work flow by aligning your professional tasks with your cycle's natural energy fluctuations.", link: "#" },
+            { title: "Optimizing Your Ovulatory Phase", description: "Harness peak energy and social confidence for networking and communication.", link: "#" },
+            { title: "Mindfulness & Stress Reduction", description: "Techniques to help manage stress and maintain emotional balance throughout your cycle.", link: "#" }
         ];
     }
 
     render() {
-        if (!this.section) {
-            console.error("ResourceManager: Target section 'resources-section' not found.");
+        if (!this.section || !this.resourcesContentDiv) {
+            console.error("ResourceManager: Target section or content div not found.");
             return;
         }
-        // console.log("ResourceManager rendering content.");
 
         let resourcesHtml = `
             <h3>Explore Curated Wellness Resources</h3>
@@ -27,7 +28,7 @@ class ResourceManager {
 
         this.resourcesData.forEach(resource => {
             resourcesHtml += `
-                <div class="resource-card">
+                <div class="resource-card glass-card">
                     <h4>${resource.title}</h4>
                     <p>${resource.description}</p>
                     <a href="${resource.link}" class="btn small-btn" target="_blank" rel="noopener noreferrer">Read More</a>
@@ -35,11 +36,8 @@ class ResourceManager {
             `;
         });
 
-        resourcesHtml += `</div>`; // Close resources-grid
-        this.section.innerHTML = resourcesHtml;
-
-        // Add any specific event listeners for resources here if needed
+        resourcesHtml += `</div>`;
+        this.resourcesContentDiv.innerHTML = resourcesHtml; // Render into the new content div
+        // No specific event listeners needed for static links within the cards
     }
-
-    // You can add more methods for filtering, searching resources etc.
 }
