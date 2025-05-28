@@ -14,11 +14,13 @@
 
     <nav class="main-nav" aria-label="Main Navigation">
         <div class="nav-logo">🌸 CycleSync</div>
-        <div class="nav-links">
+        <div class="nav-links" role="navigation">
             <button id="trackBtn" class="nav-btn" aria-controls="symptom-tracker">Track</button>
             <button id="journalBtn" class="nav-btn" aria-controls="journal-section">Journal</button>
             <button id="resourcesBtn" class="nav-btn" aria-controls="resources-section">Resources</button>
             <button id="settingsBtn" class="nav-btn" aria-controls="settings-section">Settings</button>
+            <button id="quizBtn" class="nav-btn" aria-controls="quiz-section">Quiz</button>
+            <button id="calendarBtn" class="nav-btn" aria-controls="calendar-section">Calendar</button>
         </div>
     </nav>
 
@@ -42,7 +44,9 @@
 
         <section id="symptom-tracker" class="container hidden" aria-labelledby="symptom-tracker-heading">
             <h2 id="symptom-tracker-heading">Daily Symptom Tracker</h2>
-            </section>
+            <div id="symptom-tracker-content">
+                </div>
+        </section>
 
         <section id="journal-section" class="container" aria-labelledby="journal-section-heading">
             <h2 id="journal-section-heading" class="sr-only">Daily Journal & Planner</h2>
@@ -65,7 +69,7 @@
 
             <div class="product-grid">
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/400x300?text=Cycle+Planner+Preview" alt="Cycle Sync Planner Preview - A digital planner showing various cycle tracking layouts and prompts." loading="lazy">
+                    <img src="https://via.placeholder.com/400x300?text=Cycle+Planner+Preview" alt="A preview image of the digital Cycle Sync Planner, showing various layouts for tracking and planning cycle phases." loading="lazy">
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">Cycle Sync Planner</h3>
@@ -106,15 +110,19 @@
                     <p>Receive personalized, phase-specific wellness and lifestyle recommendations.</p>
                 </div>
             </div>
-            </section>
+        </section>
 
         <section id="resources-section" class="container hidden" aria-labelledby="resources-section-heading">
             <h2 id="resources-section-heading">Wellness Resources</h2>
-            </section>
+            <div id="resources-content">
+                </div>
+        </section>
 
         <section id="settings-section" class="container hidden" aria-labelledby="settings-section-heading">
             <h2 id="settings-section-heading">Preferences</h2>
-            </section>
+            <div id="settings-content">
+                </div>
+        </section>
 
         <section id="calendar-section" class="container hidden" aria-labelledby="calendar-section-heading">
             <h2 id="calendar-section-heading">Cycle Calendar</h2>
@@ -145,13 +153,14 @@
             </div>
         </div>
         <p class="copyright">💗 Created with love for cycle awareness 💗</p>
-        </footer>
+    </footer>
 
-       <script src="track.js"></script>
+    <script src="track.js"></script>
     <script src="resources.js"></script>
     <script src="settings.js"></script>
     <script src="journal.js"></script>
     <script src="quiz.js"></script>
-    <script src="script.js"></script> </body>
+    <script src="script.js"></script>
+</body>
 </html>
 
