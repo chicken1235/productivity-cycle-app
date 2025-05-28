@@ -8,8 +8,7 @@ function hideAllSections() {
     });
 }
 
-// Function to show a specific section and optionally scroll to it
-// Smooth scrolling can be enabled/disabled via the 'smoothScroll' parameter
+// Function to show a specific section, update active nav button, and optionally scroll to it
 function showAndScrollToSection(sectionId, smoothScroll = true) {
     hideAllSections(); // Hide all other sections first
 
@@ -17,46 +16,60 @@ function showAndScrollToSection(sectionId, smoothScroll = true) {
     if (targetSection) {
         targetSection.classList.remove('hidden'); // Make the target section visible
 
-        // Determine scroll behavior based on 'smoothScroll' flag
+        // Update active state for navigation buttons
+        document.querySelectorAll('.main-nav .nav-btn').forEach(btn => {
+            if (btn.getAttribute('aria-controls') === sectionId) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
         const scrollBehavior = smoothScroll ? 'smooth' : 'auto';
 
-        // Use requestAnimationFrame for smoother scrolling, ensuring the element is rendered before scroll
         requestAnimationFrame(() => {
             targetSection.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
         });
 
-        // Update the URL hash to reflect the current section, enabling direct linking and browser history
         if (history.pushState) {
             history.pushState(null, '', `#${sectionId}`);
         } else {
-            window.location.hash = sectionId; // Fallback for older browsers if pushState isn't available
+            window.location.hash = sectionId;
         }
     } else {
         console.warn(`Attempted to show non-existent section: '${sectionId}'`);
     }
 }
 
-// --- Calendar Initialization (remains a global function for now) ---
+// --- Calendar Initialization ---
 // Populates the calendar grid with days of the current month
 function initializeCalendar() {
     const calendarGrid = document.getElementById('calendar-grid');
     if (!calendarGrid) {
-        // Log a warning if the calendar grid isn't found, but don't stop execution
         console.warn("Calendar grid element not found. Skipping calendar initialization.");
         return;
     }
 
-    calendarGrid.innerHTML = ''; // Clear any existing content to prevent duplicates on re-render
+    calendarGrid.innerHTML = ''; // Clear any existing content
 
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonth = today.getMonth(); // 0-indexed month
 
-    // Calculate days in the current month and the weekday of the first day
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay(); // 0 = Sunday
 
-    // Add empty divs to pad the calendar grid before the 1st day of the month
+    // Add day names row
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayNames.forEach(dayName => {
+        const dayNameEl = document.createElement('div');
+        dayNameEl.classList.add('calendar-day-name'); // Add a specific class for styling
+        dayNameEl.textContent = dayName;
+        calendarGrid.appendChild(dayNameEl);
+    });
+
+
+    // Add empty divs for padding
     for (let i = 0; i < firstDayOfMonth; i++) {
         const emptyDay = document.createElement('div');
         emptyDay.classList.add('calendar-day', 'empty');
@@ -70,31 +83,24 @@ function initializeCalendar() {
         dayEl.textContent = i;
         dayEl.setAttribute('data-day', i);
 
-        // Highlight today's date for visual emphasis
         if (i === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
             dayEl.classList.add('today');
         }
 
-        // Attach a click listener to each day for potential future functionality (e.g., logging entries)
         dayEl.addEventListener('click', () => selectCalendarDay(i, currentMonth, currentYear));
         calendarGrid.appendChild(dayEl);
     }
 
-    // Placeholder function for handling a selected calendar day
-    // This could be extended to open a form, display data for the day, etc.
     function selectCalendarDay(day, month, year) {
         console.log(`Selected date: ${month + 1}/${day}/${year}`);
-        // Example: You might want to pre-fill a journal entry form for this date
-        // showAndScrollToSection('journal-section');
+        // This is where you could trigger an action, e.g., open a journal entry form for this date.
+        // For now, it just logs to the console.
     }
 }
 
 // --- Main Application Initialization ---
-// Ensures all DOM content is loaded before running the main application logic
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Instantiate Manager Classes
-    // These managers encapsulate the logic and rendering for their respective sections.
-    // Ensure their JS files are loaded BEFORE this script.
     const trackManager = new TrackManager();
     const journalManager = new JournalManager();
     const resourceManager = new ResourceManager();
@@ -103,16 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Initial Content Rendering
     // Call the 'render' method on each manager to set up their initial HTML and event listeners.
-    // This is crucial for content to exist before sections are displayed or scrolled.
     trackManager.render();
     journalManager.render();
     resourceManager.render();
     settingsManager.render();
     quizManager.render();
-    initializeCalendar(); // Initialize calendar after it's rendered, potentially by trackManager
+    initializeCalendar(); // Initialize calendar after it's rendered
 
     // 3. Set Up Navigation Event Listeners
-    // Attaching listeners to the main navigation buttons
     document.querySelectorAll('.main-nav .nav-btn').forEach(button => {
         button.addEventListener('click', () => {
             const targetSectionId = button.getAttribute('aria-controls');
@@ -120,33 +124,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Using event delegation for footer Quick Links for efficiency and robustness
+    // Event delegation for footer Quick Links
     document.querySelector('.footer-content').addEventListener('click', (event) => {
-        // Check if the clicked element is an anchor tag within a footer quick link list item
         if (event.target.tagName === 'A' && event.target.closest('.footer-section ul li')) {
             const href = event.target.getAttribute('href');
             if (href && href.startsWith('#')) {
-                event.preventDefault(); // Prevent default browser navigation behavior
-                const sectionId = href.substring(1); // Extract the section ID from the href
+                event.preventDefault();
+                const sectionId = href.substring(1);
                 showAndScrollToSection(sectionId);
             }
         }
     });
 
     // 4. Initial Page Load Display & Theme Application
-    // Apply user's saved theme preferences on page load
     const savedSettings = JSON.parse(localStorage.getItem('userSettings'));
     if (savedSettings && savedSettings.theme) {
         document.documentElement.setAttribute('data-theme', savedSettings.theme);
     } else {
-        document.documentElement.setAttribute('data-theme', 'pink'); // Default theme if none saved
+        document.documentElement.setAttribute('data-theme', 'pink'); // Default theme
     }
 
-    // Determine which section to display initially based on URL hash or a default
     const initialSectionId = window.location.hash ? window.location.hash.substring(1) : 'journal-section';
-
-    // Display the initial section. No smooth scroll needed for direct page loads.
-    showAndScrollToSection(initialSectionId, false);
+    showAndScrollToSection(initialSectionId, false); // No smooth scroll on initial load
 
     // Update header cycle day/phase display if data is present in local storage
     const storedCycleDay = localStorage.getItem('currentCycleDay');
