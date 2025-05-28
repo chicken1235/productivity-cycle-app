@@ -3,42 +3,43 @@
 class SettingsManager {
     constructor() {
         this.section = document.getElementById('settings-section');
-        this.themeToggleBtn = null; // Will be set after rendering
+        this.settingsContentDiv = document.getElementById('settings-content'); // New content div
         this.currentTheme = 'pink'; // Default theme
     }
 
     render() {
-        if (!this.section) {
-            console.error("SettingsManager: Target section 'settings-section' not found.");
+        if (!this.section || !this.settingsContentDiv) {
+            console.error("SettingsManager: Target section or content div not found.");
             return;
         }
-        // console.log("SettingsManager rendering content.");
 
-        this.section.innerHTML = `
-            <h3>App Settings</h3>
-            <div class="setting-item">
-                <h4>Theme Selection</h4>
-                <div class="theme-options">
-                    <button class="theme-btn" data-theme="pink" aria-label="Switch to Pink Theme">Pink 🌸</button>
-                    <button class="theme-btn" data-theme="blue" aria-label="Switch to Blue Theme">Blue 🌊</button>
-                    <button class="theme-btn" data-theme="green" aria-label="Switch to Green Theme">Green 🌿</button>
+        this.settingsContentDiv.innerHTML = `
+            <div class="settings-form glass-card">
+                <h3>App Settings</h3>
+                <div class="setting-item">
+                    <h4>Theme Selection</h4>
+                    <div class="theme-options">
+                        <button class="theme-btn" data-theme="pink" aria-label="Switch to Pink Theme">Pink 🌸</button>
+                        <button class="theme-btn" data-theme="blue" aria-label="Switch to Blue Theme">Blue 🌊</button>
+                        <button class="theme-btn" data-theme="green" aria-label="Switch to Green Theme">Green 🌿</button>
+                    </div>
                 </div>
-            </div>
-            <div class="setting-item">
-                <h4>Cycle Length</h4>
-                <label for="userCycleLength">Your average cycle length (days):</label>
-                <input type="number" id="userCycleLength" min="21" max="35" value="28" aria-label="Average cycle length in days">
-                <button id="saveCycleLengthBtn" class="btn small-btn">Save</button>
-            </div>
+                <div class="setting-item">
+                    <h4>Cycle Length</h4>
+                    <label for="userCycleLength">Your average cycle length (days):</label>
+                    <input type="number" id="userCycleLength" class="cyber-input" min="21" max="35" value="28" aria-label="Average cycle length in days">
+                    <button id="saveCycleLengthBtn" class="btn small-btn">Save</button>
+                </div>
+                </div>
             `;
 
         this.addEventListeners();
-        this.loadSavedSettings(); // Load settings after rendering
+        this.loadSavedSettings();
     }
 
     addEventListeners() {
         // Theme selection
-        this.section.querySelectorAll('.theme-btn').forEach(button => {
+        this.settingsContentDiv.querySelectorAll('.theme-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 const selectedTheme = event.target.dataset.theme;
                 this.applyTheme(selectedTheme);
@@ -47,14 +48,16 @@ class SettingsManager {
         });
 
         // Cycle length save button
-        const saveCycleLengthBtn = this.section.querySelector('#saveCycleLengthBtn');
+        const saveCycleLengthBtn = this.settingsContentDiv.querySelector('#saveCycleLengthBtn');
         if (saveCycleLengthBtn) {
             saveCycleLengthBtn.addEventListener('click', () => {
-                const cycleLengthInput = this.section.querySelector('#userCycleLength');
+                const cycleLengthInput = this.settingsContentDiv.querySelector('#userCycleLength');
                 const length = parseInt(cycleLengthInput.value, 10);
                 if (length >= 21 && length <= 35) {
                     this.saveSetting('cycleAverageLength', length);
-                    alert('Cycle length saved!');
+                    alert('Cycle length saved successfully!');
+                    // Optionally, trigger a re-calculation of cycle day/phase if needed
+                    // (e.g., if quiz answers are already set and just length changed)
                 } else {
                     alert('Please enter a valid cycle length between 21 and 35 days.');
                 }
@@ -80,7 +83,7 @@ class SettingsManager {
                 this.applyTheme(savedSettings.theme);
             }
             if (savedSettings.cycleAverageLength) {
-                const cycleLengthInput = this.section.querySelector('#userCycleLength');
+                const cycleLengthInput = this.settingsContentDiv.querySelector('#userCycleLength');
                 if (cycleLengthInput) {
                     cycleLengthInput.value = savedSettings.cycleAverageLength;
                 }
