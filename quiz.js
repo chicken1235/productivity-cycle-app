@@ -51,7 +51,6 @@ class QuizManager {
             console.error("QuizManager: Required DOM elements for quiz not found.");
             return;
         }
-        // console.log("QuizManager rendering initial quiz content.");
         this.loadQuestion();
     }
 
@@ -62,10 +61,10 @@ class QuizManager {
 
             switch (questionData.type) {
                 case 'date':
-                    inputHtml = `<input type="date" id="${questionData.id}" name="${questionData.id}" required aria-label="${questionData.ariaLabel}">`;
+                    inputHtml = `<input type="date" id="${questionData.id}" name="${questionData.id}" class="cyber-input" required aria-label="${questionData.ariaLabel}">`;
                     break;
                 case 'number':
-                    inputHtml = `<input type="number" id="${questionData.id}" name="${questionData.id}" min="${questionData.min}" max="${questionData.max}" required aria-label="${questionData.ariaLabel}">`;
+                    inputHtml = `<input type="number" id="${questionData.id}" name="${questionData.id}" class="cyber-input" min="${questionData.min}" max="${questionData.max}" required aria-label="${questionData.ariaLabel}">`;
                     break;
                 case 'radio':
                     inputHtml = questionData.options.map(option => `
@@ -78,7 +77,7 @@ class QuizManager {
             }
 
             this.quizContentDiv.innerHTML = `
-                <div class="quiz-question-container">
+                <div class="quiz-question-container glass-card">
                     <p class="quiz-question-text">${questionData.question}</p>
                     <div class="quiz-input-area">${inputHtml}</div>
                     <button id="quizNextBtn" class="btn">Next</button>
@@ -124,7 +123,6 @@ class QuizManager {
     showResults() {
         let resultsHtml = `<h3>Your Cycle Insights:</h3><p>Based on your answers, here's a preliminary understanding of your cycle:</p><ul>`;
 
-        // Process answers and provide insights
         const lmp = this.userAnswers.lmpDate ? new Date(this.userAnswers.lmpDate) : null;
         const cycleLength = parseInt(this.userAnswers.cycleLength);
         const today = new Date();
@@ -132,23 +130,28 @@ class QuizManager {
         let currentPhase = 'Uncertain';
 
         if (lmp && cycleLength) {
-            const diffTime = Math.abs(today - lmp);
+            // Reset time for accurate date difference
+            lmp.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+
+            const diffTime = Math.abs(today.getTime() - lmp.getTime());
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             cycleDay = (diffDays % cycleLength) + 1; // Calculate current cycle day
 
             // Basic phase approximation
-            if (cycleDay >= 1 && cycleDay <= 5) { // Assuming 5 days for menstrual phase
+            if (cycleDay >= 1 && cycleDay <= 5) {
                 currentPhase = "Menstrual Phase";
-            } else if (cycleDay > 5 && cycleDay <= 13) { // Assuming days 6-13 for follicular
+            } else if (cycleDay > 5 && cycleDay <= 13) {
                 currentPhase = "Follicular Phase";
-            } else if (cycleDay >= 14 && cycleDay <= 16) { // Assuming 3 days for ovulatory
+            } else if (cycleDay >= 14 && cycleDay <= 16) {
                 currentPhase = "Ovulatory Phase";
             } else if (cycleDay > 16 && cycleDay <= cycleLength) {
                 currentPhase = "Luteal Phase";
             }
             resultsHtml += `<li>Your current cycle day is approximately: <strong>Day ${cycleDay}</strong></li>`;
             resultsHtml += `<li>Your estimated current phase is: <strong>${currentPhase}</strong></li>`;
-            // Update the header cycle tracker (assuming these elements are global or easily accessible)
+
+            // Update the header cycle tracker
             document.getElementById('cycleDay').textContent = cycleDay;
             document.getElementById('currentPhase').textContent = currentPhase;
 
@@ -175,7 +178,6 @@ class QuizManager {
         `;
         this.quizContentDiv.innerHTML = resultsHtml;
 
-        // Add restart listener
         const restartBtn = this.quizContentDiv.querySelector('#restartQuizBtn');
         if (restartBtn) {
             restartBtn.addEventListener('click', () => this.restartQuiz());
@@ -187,6 +189,4 @@ class QuizManager {
         this.userAnswers = {};
         this.loadQuestion();
     }
-
-    // You might also add methods here to save/load quiz progress if desired
 }
