@@ -3,6 +3,7 @@ class TrackManager {
     constructor() {
         this.section = document.getElementById('symptom-tracker');
         this.symptomTrackerContentDiv = document.getElementById('symptom-tracker-content'); // New content div
+        this.today = new Date().toISOString().split('T')[0]; // Store today's date once
     }
 
     render() {
@@ -16,7 +17,7 @@ class TrackManager {
                 <h3>Daily Symptom Tracker</h3>
                 <div class="form-group">
                     <label for="track-date">Date:</label>
-                    <input type="date" id="track-date" class="cyber-input" value="${new Date().toISOString().split('T')[0]}">
+                    <input type="date" id="track-date" class="cyber-input" value="${this.today}">
                 </div>
 
                 <div class="symptom-grid">
@@ -67,12 +68,17 @@ class TrackManager {
                 </div>
         `;
         this.addEventListeners();
-        this.loadSavedData();
+        this.loadSavedData(); // This now correctly handles pre-filling or resetting the form
         this.loadTrackingHistory();
     }
 
     addEventListeners() {
+        // Query elements within the symptomTrackerContentDiv
         const symptomForm = this.symptomTrackerContentDiv.querySelector('#symptomForm');
+        const energyLevelInput = this.symptomTrackerContentDiv.querySelector('#energyLevel');
+        const energyValueSpan = this.symptomTrackerContentDiv.querySelector('#energyValue');
+        const trackingHistory = this.symptomTrackerContentDiv.querySelector('#tracking-history'); // Scoped query
+
         if (symptomForm) {
             symptomForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -80,21 +86,18 @@ class TrackManager {
             });
         }
 
-        const energyLevelInput = this.symptomTrackerContentDiv.querySelector('#energyLevel');
-        const energyValueSpan = this.symptomTrackerContentDiv.querySelector('#energyValue');
         if (energyLevelInput && energyValueSpan) {
             energyLevelInput.addEventListener('input', () => {
                 energyValueSpan.textContent = energyLevelInput.value;
             });
         }
 
-        // Event delegation for deleting tracking entries
-        const trackingHistory = document.getElementById('tracking-history');
         if (trackingHistory) {
             trackingHistory.addEventListener('click', (e) => {
                 if (e.target.classList.contains('delete-entry-btn')) {
                     const dateToDelete = e.target.dataset.date;
-                    if (confirm('Are you sure you want to delete this tracking entry?')) {
+                    // Use a more robust confirmation for deletion
+                    if (confirm(`Are you sure you want to delete the tracking entry for ${dateToDelete}?`)) {
                         this.deleteTrackingEntry(dateToDelete);
                     }
                 }
@@ -103,6 +106,7 @@ class TrackManager {
     }
 
     saveDailyEntry() {
+        // Query elements within the symptomTrackerContentDiv
         const dateInput = this.symptomTrackerContentDiv.querySelector('#track-date');
         const symptomCheckboxes = this.symptomTrackerContentDiv.querySelectorAll('input[name="symptom"]:checked');
         const moodCheckboxes = this.symptomTrackerContentDiv.querySelectorAll('input[name="mood"]:checked');
@@ -129,55 +133,76 @@ class TrackManager {
         const existingIndex = savedEntries.findIndex(entry => entry.date === date);
 
         if (existingIndex > -1) {
-            savedEntries[existingIndex] = dailyEntry;
+            savedEntries[existingIndex] = dailyEntry; // Update existing entry
         } else {
-            savedEntries.push(dailyEntry);
+            savedEntries.push(dailyEntry); // Add new entry
         }
         localStorage.setItem('dailySymptoms', JSON.stringify(savedEntries));
 
         this.showSaveConfirmation('Symptom entry saved!');
         this.loadTrackingHistory(); // Re-render the history
+        this.resetFormForNewDay(); // Reset form to today's date after saving
     }
 
     loadSavedData() {
-        // Loads data for the *current* date to pre-fill the form
-        const today = new Date().toISOString().split('T')[0];
-        const savedEntries = JSON.parse(localStorage.getItem('dailySymptoms')) || [];
-        const todayEntry = savedEntries.find(entry => entry.date === today);
-
+        // Loads data for the *current* date set in the date picker to pre-fill the form
         const dateInput = this.symptomTrackerContentDiv.querySelector('#track-date');
+        const selectedDate = dateInput ? dateInput.value : this.today; // Use the date from the input, default to today
+
+        const savedEntries = JSON.parse(localStorage.getItem('dailySymptoms')) || [];
+        const entryForSelectedDate = savedEntries.find(entry => entry.date === selectedDate);
+
         const energyLevelInput = this.symptomTrackerContentDiv.querySelector('#energyLevel');
         const energyValueSpan = this.symptomTrackerContentDiv.querySelector('#energyValue');
 
-        if (todayEntry) {
-            if (dateInput) dateInput.value = todayEntry.date;
-            todayEntry.symptoms.forEach(symptom => {
+        // Reset all checkboxes first to ensure a clean slate
+        this.symptomTrackerContentDiv.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+
+        if (entryForSelectedDate) {
+            // Pre-fill form with existing data
+            entryForSelectedDate.symptoms.forEach(symptom => {
                 const checkbox = this.symptomTrackerContentDiv.querySelector(`input[name="symptom"][value="${symptom}"]`);
                 if (checkbox) checkbox.checked = true;
             });
-            todayEntry.moods.forEach(mood => {
+            entryForSelectedDate.moods.forEach(mood => {
                 const checkbox = this.symptomTrackerContentDiv.querySelector(`input[name="mood"][value="${mood}"]`);
                 if (checkbox) checkbox.checked = true;
             });
 
             if (energyLevelInput && energyValueSpan) {
-                energyLevelInput.value = todayEntry.energyLevel;
-                energyValueSpan.textContent = todayEntry.energyLevel;
+                energyLevelInput.value = entryForSelectedDate.energyLevel;
+                energyValueSpan.textContent = entryForSelectedDate.energyLevel;
             }
         } else {
-             // If no entry for today, reset form
-             if (dateInput) dateInput.value = today;
-             this.symptomTrackerContentDiv.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-             if (energyLevelInput && energyValueSpan) {
-                 energyLevelInput.value = 5;
-                 energyValueSpan.textContent = 5;
-             }
+            // If no entry for the selected date, reset energy slider to default
+            if (energyLevelInput && energyValueSpan) {
+                energyLevelInput.value = 5;
+                energyValueSpan.textContent = 5;
+            }
         }
     }
 
+    // New method to specifically reset the form to today's date and default values
+    resetFormForNewDay() {
+        const dateInput = this.symptomTrackerContentDiv.querySelector('#track-date');
+        const energyLevelInput = this.symptomTrackerContentDiv.querySelector('#energyLevel');
+        const energyValueSpan = this.symptomTrackerContentDiv.querySelector('#energyValue');
+
+        if (dateInput) {
+            dateInput.value = this.today; // Set date back to today
+        }
+        this.symptomTrackerContentDiv.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+        if (energyLevelInput && energyValueSpan) {
+            energyLevelInput.value = 5;
+            energyValueSpan.textContent = 5;
+        }
+        this.loadSavedData(); // Reload data for the now selected 'today'
+    }
+
+
     loadTrackingHistory() {
         const entries = JSON.parse(localStorage.getItem('dailySymptoms') || '[]');
-        const container = document.getElementById('tracking-history');
+        const container = this.symptomTrackerContentDiv.querySelector('#tracking-history'); // Scoped query
 
         if (!container) return;
 
@@ -201,13 +226,13 @@ class TrackManager {
 
         const symptomsHtml = entry.symptoms.length ? `
             <div class="entry-tags">
-                ${entry.symptoms.map(s => `<span class="tag">${s}</span>`).join('')}
+                ${entry.symptoms.map(s => `<span class="tag">${s.replace(/_/g, ' ')}</span>`).join('')}
             </div>
         ` : '';
 
         const moodsHtml = entry.moods.length ? `
             <div class="entry-tags">
-                ${entry.moods.map(m => `<span class="tag mood-tag">${m}</span>`).join('')}
+                ${entry.moods.map(m => `<span class="tag mood-tag">${m.replace(/_/g, ' ')}</span>`).join('')}
             </div>
         ` : '';
 
@@ -234,6 +259,10 @@ class TrackManager {
         localStorage.setItem('dailySymptoms', JSON.stringify(entries));
         this.loadTrackingHistory();
         this.showSaveConfirmation('Tracking entry deleted!', 'info');
+        // If the deleted entry was for today, reset the form
+        if (date === this.symptomTrackerContentDiv.querySelector('#track-date').value) {
+            this.resetFormForNewDay();
+        }
     }
 
     showSaveConfirmation(message, type = 'success') {
