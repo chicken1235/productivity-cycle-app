@@ -11,49 +11,49 @@ class ResourceManager {
             {
                 title: "Understanding Your Follicular Phase: Unleash Your Inner Spring",
                 description: "This phase, from menstruation to ovulation, is characterized by rising energy, mental clarity, and a natural inclination towards new beginnings. Ideal for planning, strategizing, and tackling new projects. Learn how to leverage this period for personal growth and productivity.",
-                link: "https://www.example.com/follicular-phase-guide", // Example external link
+                link: "https://ummumulkheiyr.gumroad.com/l/Cycleplanner?_gl=1*1befze8*_ga*MTA4MjU3NTQ2NS4xNzQ4MzczOTY4*_ga_6LJN6D94N6*czE3NDg1NDg1NjgkbzkkZzEkdDE3NDg1NTA3MzIkajU4JGwwJGgw", // Corrected Gumroad link
                 phase: "follicular",
                 keywords: ["energy", "focus", "planning", "new beginnings", "growth"]
             },
             {
                 title: "Nutrition for Luteal Phase Comfort: Nurturing Your Inner Autumn",
                 description: "As progesterone rises, you might experience pre-menstrual symptoms. Discover nutrient-rich foods, healthy snacks, and dietary tips to help ease common discomforts like bloating, cravings, and fatigue. Focus on grounding and nourishing your body.",
-                link: "https://www.example.com/luteal-nutrition",
+                link: "https://ummumulkheiyr.gumroad.com/l/Cycleplanner?_gl=1*1befze8*_ga*MTA4MjU3NTQ2NS4xNzQ4MzczOTY4*_ga_6LJN6D94N6*czE3NDg1NDg1NjgkbzkkZzEkdDE3NDg1NTA3MzIkajU4JGwwJGgw", // Using the same link as an example
                 phase: "luteal",
                 keywords: ["nutrition", "cravings", "bloating", "fatigue", "comfort", "PMS"]
             },
             {
                 title: "Gentle Movement for Menstrual Phase: Embracing Your Inner Winter",
                 description: "During menstruation, your body is working hard. Support it with restorative practices like gentle yoga, stretching, walking, or meditation. Prioritize rest, self-care, and introspection. Listen to your body's need for stillness.",
-                link: "https://www.example.com/menstrual-movement",
+                link: "https://ummumulkheiyr.gumroad.com/l/Cycleplanner?_gl=1*1befze8*_ga*MTA4MjU3NTQ2NS4xNzQ4MzczOTY4*_ga_6LJN6D94N6*czE3NDg1NDg1NjgkbzkkZzEkdDE3NDg1NTA3MzIkajU4JGwwJGgw", // Using the same link as an example
                 phase: "menstrual",
                 keywords: ["rest", "meditation", "yoga", "self-care", "pain relief"]
             },
             {
                 title: "Cycle Syncing for Productivity: Harmonize Your Work & Cycle",
                 description: "Maximize your efficiency by aligning your professional tasks with your cycle's natural energy fluctuations. Learn which tasks are best suited for each phase, from brainstorming in follicular to networking in ovulatory.",
-                link: "https://www.example.com/cycle-syncing-productivity",
+                link: "https://ummumulkheiyr.gumroad.com/l/Cycleplanner?_gl=1*1befze8*_ga*MTA4MjU3NTQ2NS4xNzQ4MzczOTY4*_ga_6LJN6D94N6*czE3NDg1NDg1NjgkbzkkZzEkdDE3NDg1NTA3MzIkajU4JGwwJGgw", // Using the same link as an example
                 phase: "general", // Applicable across phases or as an introductory concept
                 keywords: ["productivity", "work-life balance", "biohacking", "efficiency"]
             },
             {
                 title: "Optimizing Your Ovulatory Phase: Shine Bright Like Your Inner Summer",
                 description: "The ovulatory phase brings peak energy, confidence, and enhanced communication skills. This is your time to shine! Learn how to leverage this phase for social engagements, presentations, and creative expression.",
-                link: "https://www.example.com/ovulatory-optimizing",
+                link: "https://ummumulkheiyr.gumroad.com/l/Cycleplanner?_gl=1*1befze8*_ga*MTA4MjU3NTQ2NS4xNzQ4MzczOTY4*_ga_6LJN6D94N6*czE3NDg1NDg1NjgkbzkkZzEkdDE3NDg1NTA3MzIkajU4JGwwJGgw", // Using the same link as an example
                 phase: "ovulatory",
                 keywords: ["confidence", "social", "communication", "peak energy", "creativity"]
             },
             {
                 title: "Mindfulness & Stress Reduction: A Tool for Every Phase",
                 description: "Integrate mindfulness techniques, deep breathing exercises, and meditation into your daily routine to manage stress and maintain emotional balance throughout your entire cycle, regardless of phase.",
-                link: "https://www.example.com/mindfulness-stress",
+                link: "https://ummumulkheiyr.gumroad.com/l/Cycleplanner?_gl=1*1befze8*_ga*MTA4MjU3NTQ2NS4xNzQ4MzczOTY4*_ga_6LJN6D94N6*czE3NDg1NDg1NjgkbzkkZzEkdDE3NDg1NTA3MzIkajU4JGwwJGgw", // Using the same link as an example
                 phase: "general",
                 keywords: ["stress", "anxiety", "meditation", "well-being", "emotional balance"]
             },
             {
                 title: "Understanding Your Luteal Phase: Embracing Your Inner Autumn",
                 description: "The period after ovulation leading to menstruation can bring introspection and a desire to wind down. Learn to manage pre-menstrual energy shifts and prioritize self-care and completion of tasks.",
-                link: "https://www.example.com/luteal-understanding",
+                link: "https://ummumulkheiyr.gumroad.com/l/Cycleplanner?_gl=1*1befze8*_ga*MTA4MjU3NTQ2NS4xNzQ0MzczOTY4*_ga_6LJN6D94N6*czE3NDg1NDg1NjgkbzkkZzEkdDE3NDg1NTA3MzIkajU4JGwwJGgw", // Using the same link as an example
                 phase: "luteal",
                 keywords: ["introspection", "pre-menstrual", "winding down", "self-care"]
             }
