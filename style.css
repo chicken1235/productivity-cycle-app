@@ -1,37 +1,44 @@
 /* Cyberpunk Girly Theme */
 :root {
-    --neon-pink: #ff71ce;
-    --neon-blue: #01cdfe;
-    --neon-purple: #b967ff;
-    --neon-green: #05ffa1;
-    --dark-bg: #1a1a2e;
-    --darker-bg: #16161e;
-    --light-text: #ffffff;
-    --dark-text: #1a1a2e; /* Added for selected states */
-    --glass-bg: rgba(255, 113, 206, 0.1);
-    --glass-border: rgba(255, 113, 206, 0.2);
-    --cyber-grid: #ff71ce20;
-    --danger-red: #ff4d4f; /* For delete actions */
-    --light-border: rgba(255, 255, 255, 0.1); /* General light border */
+    /* Main color palette - more pastels, softer neons */
+    --neon-pink: #FF85E3; /* Brighter, more bubblegum pink */
+    --neon-blue: #85E3FF; /* Softer, sky blue neon */
+    --neon-purple: #C285FF; /* Lavender-ish purple */
+    --neon-green: #A1FF85; /* Minty green */
+
+    /* Backgrounds - slightly lighter, less aggressive darks */
+    --dark-bg: #1F1B2E; /* Softer dark purple-blue */
+    --darker-bg: #1B182B; /* Slightly darker than dark-bg */
+    --light-text: #F0F0F0; /* Slightly off-white for warmth */
+    --dark-text: #1F1B2E; /* Text on bright elements */
+
+    /* Glassmorphism - more vibrant, playful */
+    --glass-bg: rgba(255, 133, 227, 0.15); /* More opaque, pinker glass */
+    --glass-border: rgba(255, 133, 227, 0.4); /* Stronger, more defined pink border */
+
+    /* Grid & Accent - brighter, more sparkling */
+    --cyber-grid: #FF85E330; /* More prominent, sparkling pink grid */
+    --danger-red: #FF6666; /* Softer red for danger */
+    --light-border: rgba(255, 255, 255, 0.15); /* Slightly stronger light border */
 }
 
-/* Theme variations */
+/* Theme variations - adjusted for new palette */
 [data-theme="blue"] {
-    --neon-pink: #01cdfe;
-    --neon-blue: #b967ff;
-    --neon-purple: #ff71ce;
-    --glass-bg: rgba(1, 205, 254, 0.1);
-    --glass-border: rgba(1, 205, 254, 0.2);
-    --cyber-grid: #01cdfe20;
+    --neon-pink: #85E3FF;
+    --neon-blue: #C285FF;
+    --neon-purple: #FF85E3;
+    --glass-bg: rgba(133, 227, 255, 0.15);
+    --glass-border: rgba(133, 227, 255, 0.4);
+    --cyber-grid: #85E3FF30;
 }
 
 [data-theme="green"] {
-    --neon-pink: #05ffa1;
-    --neon-blue: #ff71ce;
-    --neon-purple: #01cdfe;
-    --glass-bg: rgba(5, 255, 161, 0.1);
-    --glass-border: rgba(5, 255, 161, 0.2);
-    --cyber-grid: #05ffa120;
+    --neon-pink: #A1FF85;
+    --neon-blue: #FF85E3;
+    --neon-purple: #85E3FF;
+    --glass-bg: rgba(161, 255, 133, 0.15);
+    --glass-border: rgba(161, 255, 133, 0.4);
+    --cyber-grid: #A1FF8530;
 }
 
 
@@ -40,7 +47,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Orbitron', sans-serif; /* Still futuristic, but consider 'Poppins' or 'Inter' for a softer feel if desired */
 }
 
 body {
@@ -64,7 +71,8 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, transparent 0%, var(--dark-bg) 100%);
+    /* Soften the radial gradient for a gentler glow */
+    background: radial-gradient(circle at center, transparent 0%, var(--dark-bg) 75%); /* Adjusted percentage */
     pointer-events: none;
     z-index: -1;
 }
@@ -89,34 +97,35 @@ h1, h2, h3, h4 {
     color: var(--neon-pink);
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 0 0 10px var(--neon-pink);
+    text-shadow: 0 0 12px var(--neon-pink); /* Slightly stronger glow */
     margin-bottom: 1rem;
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 3.2rem; /* Slightly larger for more impact */
     margin-bottom: 2rem;
-    animation: glowText 2s infinite alternate;
+    animation: glowText 2s infinite alternate, sparkle 1s infinite alternate; /* Added sparkle */
 }
 
 .subtitle {
     color: var(--neon-blue);
-    font-size: 1.2rem;
+    font-size: 1.3rem; /* Slightly larger */
     margin-bottom: 2rem;
+    text-shadow: 0 0 8px var(--neon-blue); /* Added glow */
 }
 
 /* Containers & Sections */
 .container {
     max-width: 900px;
     margin: 2rem auto;
-    padding: 2rem;
+    padding: 2.5rem; /* Increased padding */
     background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    border: 2px solid var(--glass-border); /* Thicker border */
+    backdrop-filter: blur(15px); /* Stronger blur */
+    border-radius: 20px; /* More rounded corners */
+    box-shadow: 0 0 30px rgba(0,0,0,0.4), inset 0 0 10px rgba(255,255,255,0.1); /* Added inner shadow for depth */
     position: relative;
-    overflow: hidden; /* For pseudo-elements */
+    overflow: hidden;
 }
 
 .container.hidden {
@@ -125,115 +134,116 @@ h1 {
 
 /* Main content adjustments */
 main {
-    flex-grow: 1; /* Allows main content to expand and push footer down */
+    flex-grow: 1;
 }
 
 /* Cycle Tracker in Header */
 header {
     text-align: center;
-    padding: 3rem 1rem 1rem;
+    padding: 3.5rem 1rem 1.5rem; /* More vertical padding */
 }
 
 .cycle-tracker {
     display: inline-flex;
     background: var(--darker-bg);
-    border: 1px solid var(--neon-blue);
-    border-radius: 30px;
-    padding: 0.8rem 1.5rem;
-    gap: 1rem;
+    border: 2px solid var(--neon-blue); /* Thicker border */
+    border-radius: 40px; /* More rounded, pill shape */
+    padding: 1rem 2rem; /* Increased padding */
+    gap: 1.2rem; /* Slightly more space */
     align-items: center;
-    margin-top: 1.5rem;
-    box-shadow: 0 0 15px rgba(1, 205, 254, 0.5);
+    margin-top: 2rem; /* More margin */
+    box-shadow: 0 0 20px rgba(133, 227, 255, 0.7); /* Brighter glow */
 }
 
 .cycle-day, .phase-indicator {
-    font-size: 1.1rem;
+    font-size: 1.2rem; /* Slightly larger text */
     font-weight: bold;
     color: var(--light-text);
 }
 
 #cycleDay, #currentPhase {
     color: var(--neon-green);
-    text-shadow: 0 0 5px var(--neon-green);
+    text-shadow: 0 0 8px var(--neon-green); /* Brighter glow */
 }
 
 
 /* --- Gumroad Product Section --- */
 .product-promotion {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem; /* More space */
 }
 
 .product-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 3rem; /* Increased gap */
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem; /* More space */
 }
 
 .product-image {
     position: relative;
-    border-radius: 10px;
+    border-radius: 15px; /* More rounded */
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(255, 113, 206, 0.4);
+    box-shadow: 0 0 25px rgba(255, 133, 227, 0.5); /* Brighter glow */
 }
 
 .product-image img {
     width: 100%;
     height: auto;
     display: block;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease; /* Slower transition */
 }
 
 .product-image:hover img {
-    transform: scale(1.05);
+    transform: scale(1.08); /* More pronounced zoom */
 }
 
 .product-info {
-    padding: 1rem; /* Adjust padding for better fit */
+    padding: 1.5rem; /* Adjusted padding */
 }
 
 .product-title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem; /* Larger title */
+    margin-bottom: 1.2rem;
     color: var(--neon-pink);
-    text-shadow: 0 0 10px var(--neon-pink);
+    text-shadow: 0 0 15px var(--neon-pink); /* Stronger glow */
 }
 
 .product-description {
-    margin-bottom: 1.5rem; /* Reduced margin */
-    line-height: 1.6;
+    margin-bottom: 2rem; /* Increased margin */
+    line-height: 1.7; /* More relaxed line height */
     color: var(--light-text);
+    font-size: 1.05rem; /* Slightly larger text */
 }
 
 .price-tag {
-    font-size: 2.5rem;
+    font-size: 3rem; /* Larger price */
     color: var(--neon-green);
-    text-shadow: 0 0 10px var(--neon-green);
-    margin-bottom: 1.5rem; /* Reduced margin */
+    text-shadow: 0 0 15px var(--neon-green); /* Stronger glow */
+    margin-bottom: 2rem; /* Increased margin */
 }
 
 .buy-button {
     background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
     color: var(--light-text);
     border: none;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border-radius: 30px;
+    padding: 1.2rem 2.5rem; /* Larger button */
+    font-size: 1.3rem; /* Larger text */
+    border-radius: 40px; /* More rounded */
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px; /* Wider letter spacing */
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 20px var(--neon-pink);
-    text-decoration: none; /* For anchor tags acting as buttons */
-    display: inline-block; /* For anchor tags acting as buttons */
+    transition: all 0.4s ease; /* Slower transition */
+    box-shadow: 0 0 25px var(--neon-pink), inset 0 0 5px rgba(255,255,255,0.2); /* Added inner shadow */
+    text-decoration: none;
+    display: inline-block;
 }
 
 .buy-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px var(--neon-pink);
+    transform: translateY(-4px); /* More pronounced lift */
+    box-shadow: 0 0 40px var(--neon-pink), inset 0 0 8px rgba(255,255,255,0.3); /* Stronger glow */
 }
 
 .buy-button::before {
@@ -246,7 +256,7 @@ header {
     background: linear-gradient(
         45deg,
         transparent,
-        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.2), /* More visible shine */
         transparent
     );
     transform: rotate(45deg);
@@ -256,39 +266,41 @@ header {
 /* Features Section */
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Adjusted minmax */
-    gap: 1.5rem; /* Reduced gap */
-    margin-top: 2.5rem; /* Adjusted margin */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted minmax for slightly larger cards */
+    gap: 2rem; /* Increased gap */
+    margin-top: 3rem; /* Adjusted margin */
 }
 
 .feature-card {
     background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 10px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
+    border: 2px solid var(--glass-border); /* Thicker border */
+    border-radius: 15px; /* More rounded */
+    padding: 2rem; /* More padding */
+    transition: all 0.4s ease; /* Slower transition */
     text-align: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 20px var(--neon-blue); /* Changed hover glow */
+    transform: translateY(-8px); /* More pronounced lift */
+    box-shadow: 0 0 30px var(--neon-blue), inset 0 0 8px rgba(255,255,255,0.1); /* Stronger, inner glow */
 }
 
 .feature-icon {
-    font-size: 2.5rem; /* Slightly larger icon */
+    font-size: 3rem; /* Larger icon */
     color: var(--neon-blue);
-    margin-bottom: 0.8rem; /* Adjusted margin */
-    text-shadow: 0 0 10px var(--neon-blue);
+    margin-bottom: 1rem; /* Adjusted margin */
+    text-shadow: 0 0 15px var(--neon-blue); /* Stronger glow */
 }
 .feature-card h3 {
-    font-size: 1.2rem; /* Adjusted heading size */
-    margin-bottom: 0.5rem;
+    font-size: 1.3rem; /* Adjusted heading size */
+    margin-bottom: 0.8rem;
+    color: var(--neon-pink); /* Make feature headings pink too */
 }
 .feature-card p {
-    font-size: 0.95rem; /* Adjusted text size */
+    font-size: 1rem; /* Slightly larger text */
     color: var(--light-text);
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 
@@ -299,41 +311,43 @@ header {
 
 #calendar-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 days a week */
-    gap: 10px;
-    margin-top: 1.5rem;
-    padding: 1rem;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px; /* Slightly more gap */
+    margin-top: 2rem;
+    padding: 1.5rem; /* More padding */
     background: var(--darker-bg);
-    border: 1px solid var(--neon-blue);
-    border-radius: 10px;
+    border: 2px solid var(--neon-blue); /* Thicker border */
+    border-radius: 15px; /* More rounded */
+    box-shadow: 0 0 20px rgba(133, 227, 255, 0.4);
 }
 
 .calendar-day {
     background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 8px;
-    padding: 1rem 0.5rem;
+    border: 2px solid var(--glass-border); /* Thicker border */
+    border-radius: 12px; /* More rounded */
+    padding: 1.2rem 0.6rem; /* More padding */
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1.2rem; /* Larger text */
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.2s ease;
-    aspect-ratio: 1 / 1; /* Make days square */
+    transition: all 0.3s ease;
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .calendar-day:hover {
-    background: rgba(255, 113, 206, 0.2);
-    box-shadow: 0 0 15px var(--neon-pink);
-    transform: translateY(-2px);
+    background: rgba(255, 133, 227, 0.3); /* More vibrant hover */
+    box-shadow: 0 0 20px var(--neon-pink); /* Stronger glow */
+    transform: translateY(-3px); /* More pronounced lift */
 }
 
 .calendar-day.today {
-    border: 2px solid var(--neon-green);
+    border: 3px solid var(--neon-green); /* Thicker border */
     color: var(--neon-green);
-    box-shadow: 0 0 15px var(--neon-green);
+    box-shadow: 0 0 20px var(--neon-green); /* Stronger glow */
 }
 
 .calendar-day.empty {
@@ -345,62 +359,65 @@ header {
 
 /* --- General Form Styling --- */
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem; /* More space */
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     color: var(--neon-blue);
     font-weight: bold;
+    font-size: 1.05rem; /* Slightly larger label */
 }
 
 /* Input Styles */
 .cyber-input {
     width: 100%;
     background: var(--darker-bg);
-    border: 1px solid var(--neon-pink);
+    border: 2px solid var(--neon-pink); /* Thicker border */
     color: var(--light-text);
-    padding: 0.8rem;
-    border-radius: 5px;
+    padding: 1rem; /* More padding */
+    border-radius: 8px; /* More rounded */
     outline: none;
-    transition: all 0.3s ease;
-    font-size: 1rem;
+    transition: all 0.4s ease; /* Slower transition */
+    font-size: 1.1rem; /* Larger text */
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2); /* Inner shadow */
 }
 
 .cyber-input:focus {
     border-color: var(--neon-blue);
-    box-shadow: 0 0 10px var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-blue), inset 0 0 8px rgba(133, 227, 255, 0.3); /* Stronger glow, inner glow */
 }
 
 textarea.cyber-input {
     resize: vertical;
-    min-height: 120px;
+    min-height: 150px; /* Taller textarea */
 }
 
 /* Radio Button Styles for Quiz */
 .quiz-input-area label {
-    display: block; /* Each radio option on its own line */
-    margin-bottom: 10px;
+    display: block;
+    margin-bottom: 12px; /* More space */
     cursor: pointer;
     background: var(--darker-bg);
-    border: 1px solid var(--neon-blue);
-    padding: 12px 15px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    border: 2px solid var(--neon-blue); /* Thicker border */
+    padding: 15px 20px; /* More padding */
+    border-radius: 10px; /* More rounded */
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .quiz-input-area label:hover {
-    background: rgba(1, 205, 254, 0.1);
-    box-shadow: 0 0 10px var(--neon-blue);
+    background: rgba(133, 227, 255, 0.2); /* More vibrant hover */
+    box-shadow: 0 0 15px var(--neon-blue); /* Stronger glow */
 }
 
 .quiz-input-area input[type="radio"] {
-    margin-right: 10px;
+    margin-right: 12px; /* More space */
     appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--neon-pink);
+    width: 22px; /* Larger radio button */
+    height: 22px; /* Larger radio button */
+    border: 3px solid var(--neon-pink); /* Thicker border */
     border-radius: 50%;
     position: relative;
     vertical-align: middle;
@@ -411,12 +428,13 @@ textarea.cyber-input {
 .quiz-input-area input[type="radio"]:checked {
     background-color: var(--neon-pink);
     border-color: var(--neon-pink);
+    box-shadow: 0 0 10px var(--neon-pink); /* Glow on checked */
 }
 
 .quiz-input-area input[type="radio"]:checked::after {
     content: '';
-    width: 8px;
-    height: 8px;
+    width: 10px; /* Larger inner dot */
+    height: 10px; /* Larger inner dot */
     background: var(--dark-bg);
     border-radius: 50%;
     position: absolute;
@@ -429,26 +447,27 @@ textarea.cyber-input {
 /* Checkbox Styles */
 .cyber-checkbox {
     appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--neon-pink);
-    border-radius: 4px;
+    width: 24px; /* Larger checkbox */
+    height: 24px; /* Larger checkbox */
+    border: 3px solid var(--neon-pink); /* Thicker border */
+    border-radius: 6px; /* More rounded */
     position: relative;
     cursor: pointer;
     vertical-align: middle;
-    margin-right: 8px;
-    transition: all 0.2s ease;
+    margin-right: 10px;
+    transition: all 0.3s ease;
 }
 
 .cyber-checkbox:checked {
     background-color: var(--neon-pink);
     border-color: var(--neon-pink);
+    box-shadow: 0 0 10px var(--neon-pink); /* Glow on checked */
 }
 
 .cyber-checkbox:checked::after {
     content: '✔';
     color: var(--dark-bg);
-    font-size: 14px;
+    font-size: 16px; /* Larger checkmark */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -461,112 +480,114 @@ textarea.cyber-input {
     background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
     border: none;
     color: var(--light-text);
-    padding: 1rem 2rem;
-    border-radius: 30px;
+    padding: 1.2rem 2.5rem; /* Larger button */
+    border-radius: 40px; /* More rounded */
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px; /* Wider letter spacing */
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px var(--neon-pink);
-    font-weight: bold;
-    text-decoration: none; /* For anchor tags if used as buttons */
-    display: inline-block; /* For anchor tags if used as buttons */
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 25px var(--neon-pink);
-}
-
-.btn.small-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    border-radius: 20px;
-    letter-spacing: 1px;
-}
-
-.btn-secondary {
-    background: var(--darker-bg);
-    border: 1px solid var(--neon-blue);
-    color: var(--neon-blue);
-    padding: 1rem 2rem;
-    border-radius: 30px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 25px var(--neon-pink), inset 0 0 5px rgba(255,255,255,0.2);
     font-weight: bold;
     text-decoration: none;
     display: inline-block;
 }
 
+.btn:hover {
+    transform: translateY(-4px); /* More pronounced lift */
+    box-shadow: 0 0 40px var(--neon-pink), inset 0 0 8px rgba(255,255,255,0.3);
+}
+
+.btn.small-btn {
+    padding: 0.6rem 1.2rem; /* Adjusted for smaller */
+    font-size: 1rem; /* Slightly larger */
+    border-radius: 25px; /* More rounded */
+    letter-spacing: 1.5px;
+}
+
+.btn-secondary {
+    background: var(--darker-bg);
+    border: 2px solid var(--neon-blue); /* Thicker border */
+    color: var(--neon-blue);
+    padding: 1.2rem 2.5rem;
+    border-radius: 40px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: all 0.4s ease;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 0 15px rgba(133, 227, 255, 0.2);
+}
+
 .btn-secondary:hover {
-    background: rgba(1, 205, 254, 0.1);
-    box-shadow: 0 0 15px var(--neon-blue);
+    background: rgba(133, 227, 255, 0.2); /* More vibrant hover */
+    box-shadow: 0 0 25px var(--neon-blue);
 }
 
 /* Notification Popups (for save confirmations) */
 .notification-popup {
     position: fixed;
-    bottom: 20px;
+    bottom: 30px; /* Higher from bottom */
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));
     color: var(--dark-bg);
-    padding: 1rem 2rem;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 255, 161, 0.6);
+    padding: 1.2rem 2.5rem; /* Larger padding */
+    border-radius: 15px; /* More rounded */
+    box-shadow: 0 0 25px rgba(161, 255, 133, 0.8); /* Brighter glow */
     z-index: 1000;
     font-weight: bold;
     text-align: center;
     animation: fadeInOut 3s forwards;
+    font-size: 1.1rem; /* Slightly larger text */
 }
 
 @keyframes fadeInOut {
-    0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    0% { opacity: 0; transform: translateX(-50%) translateY(30px); } /* Start lower */
     10% { opacity: 1; transform: translateX(-50%) translateY(0); }
     90% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(30px); } /* End lower */
 }
 
 
 /* --- Navigation --- */
 .main-nav {
     background: var(--darker-bg);
-    border-bottom: 1px solid var(--neon-pink);
-    padding: 1rem 2rem;
+    border-bottom: 2px solid var(--neon-pink); /* Thicker border */
+    padding: 1.2rem 2.5rem; /* More padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.6); /* Stronger shadow */
 }
 
 .nav-logo {
-    font-size: 1.8rem;
+    font-size: 2rem; /* Larger logo */
     font-weight: bold;
     color: var(--neon-green);
-    text-shadow: 0 0 8px var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green); /* Stronger glow */
 }
 
 .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.8rem; /* More space between links */
 }
 
 .nav-btn {
     background: none;
     border: none;
     color: var(--light-text);
-    font-size: 1.1rem;
+    font-size: 1.2rem; /* Larger text */
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px; /* Wider spacing */
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     position: relative;
     transition: color 0.3s ease;
 }
@@ -574,10 +595,10 @@ textarea.cyber-input {
 .nav-btn::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -8px; /* Lower underline */
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 3px; /* Thicker underline */
     background: var(--neon-blue);
     transform: scaleX(0);
     transition: transform 0.3s ease;
@@ -585,25 +606,26 @@ textarea.cyber-input {
 
 .nav-btn:hover {
     color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue); /* Add hover glow */
 }
 
 .nav-btn:hover::after,
-.nav-btn.active::after { /* Add active state for current section */
+.nav-btn.active::after {
     transform: scaleX(1);
     background: var(--neon-pink); /* Active state glow */
 }
 .nav-btn.active {
     color: var(--neon-pink);
-    text-shadow: 0 0 5px var(--neon-pink);
+    text-shadow: 0 0 8px var(--neon-pink); /* Stronger active glow */
 }
 
 
 /* --- Footer --- */
 footer {
     background: var(--darker-bg);
-    border-top: 1px solid var(--neon-pink);
-    padding: 2rem;
-    margin-top: 4rem;
+    border-top: 2px solid var(--neon-pink); /* Thicker border */
+    padding: 2.5rem; /* More padding */
+    margin-top: 5rem; /* More margin */
     text-align: center;
     color: var(--light-text);
 }
@@ -612,17 +634,17 @@ footer {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem; /* More space */
 }
 
 .footer-section {
-    margin: 1rem;
+    margin: 1.2rem; /* More margin */
 }
 
 .footer-section h4 {
     color: var(--neon-blue);
-    margin-bottom: 1rem;
-    text-shadow: none; /* Remove text-shadow for smaller headings */
+    margin-bottom: 1.2rem;
+    text-shadow: 0 0 5px var(--neon-blue); /* Re-added subtle glow */
 }
 
 .footer-section ul {
@@ -631,7 +653,7 @@ footer {
 }
 
 .footer-section ul li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem; /* More space */
 }
 
 .footer-section ul li a {
@@ -642,278 +664,295 @@ footer {
 
 .footer-section ul li a:hover {
     color: var(--neon-green);
+    text-shadow: 0 0 3px var(--neon-green); /* Added subtle glow on hover */
 }
 
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 1.5rem; /* More space */
+    margin-top: 1.5rem;
 }
 
 .social-links a {
     color: var(--neon-pink);
-    font-size: 1.8rem;
+    font-size: 2.2rem; /* Larger icons */
     transition: all 0.3s ease;
+    text-shadow: 0 0 10px var(--neon-pink); /* Added glow */
 }
 
 .social-links a:hover {
     color: var(--neon-blue);
-    transform: translateY(-3px) scale(1.1);
+    transform: translateY(-5px) scale(1.2); /* More pronounced lift and scale */
+    text-shadow: 0 0 15px var(--neon-blue); /* Stronger glow */
 }
 
 .copyright {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: 1.5rem;
+    font-size: 0.95rem; /* Slightly larger */
+    color: rgba(255, 255, 255, 0.8); /* Slightly brighter */
+    margin-top: 2rem;
 }
 
 
 /* --- Journal Section Specific Styles --- */
 .journal-form {
-    padding: 2rem;
-    margin-bottom: 2rem;
+    padding: 2.5rem; /* More padding */
+    margin-bottom: 2.5rem;
 }
 
 .mood-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 10px;
-    margin-bottom: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* Slightly larger min-width for moods */
+    gap: 12px; /* More gap */
+    margin-bottom: 1.8rem;
 }
 
 .mood-btn {
     background: var(--darker-bg);
-    border: 1px solid var(--neon-purple);
+    border: 2px solid var(--neon-purple); /* Thicker border */
     color: var(--light-text);
-    padding: 0.8rem;
-    border-radius: 8px;
+    padding: 1rem; /* More padding */
+    border-radius: 10px; /* More rounded */
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 1.8rem; /* Emoji size */
-    transition: all 0.2s ease;
+    font-size: 2.2rem; /* Larger emoji size */
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .mood-btn:hover {
-    background: rgba(185, 103, 255, 0.2);
-    box-shadow: 0 0 15px var(--neon-purple);
+    background: rgba(194, 133, 255, 0.3); /* More vibrant hover */
+    box-shadow: 0 0 20px var(--neon-purple); /* Stronger glow */
 }
 
 .mood-btn.selected {
     background: var(--neon-purple);
-    color: var(--dark-text); /* Changed for readability */
-    box-shadow: 0 0 20px var(--neon-purple);
-    transform: translateY(-2px);
+    color: var(--dark-text);
+    box-shadow: 0 0 25px var(--neon-purple), inset 0 0 8px rgba(255,255,255,0.3); /* Stronger, inner glow */
+    transform: translateY(-4px); /* More pronounced lift */
 }
 
 .mood-name {
-    font-size: 0.8rem;
-    margin-top: 5px;
+    font-size: 0.9rem; /* Slightly larger */
+    margin-top: 8px; /* More space */
     color: var(--light-text);
+    font-weight: bold; /* Make mood names bold */
 }
 .mood-btn.selected .mood-name {
-    color: var(--dark-text); /* Changed for readability */
+    color: var(--dark-text);
 }
 
 
 .tag-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 1.5rem;
+    gap: 12px; /* More gap */
+    margin-bottom: 1.8rem;
 }
 
 .journal-tag {
     background: var(--darker-bg);
-    border: 1px solid var(--neon-blue);
+    border: 2px solid var(--neon-blue); /* Thicker border */
     color: var(--neon-blue);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
+    padding: 0.6rem 1.2rem; /* More padding */
+    border-radius: 25px; /* More rounded */
     cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
+    font-size: 1rem; /* Larger text */
+    transition: all 0.3s ease;
+    font-weight: bold;
 }
 
 .journal-tag:hover {
-    background: rgba(1, 205, 254, 0.1);
-    box-shadow: 0 0 10px var(--neon-blue);
+    background: rgba(133, 227, 255, 0.2); /* More vibrant hover */
+    box-shadow: 0 0 15px var(--neon-blue); /* Stronger glow */
 }
 
 .journal-tag.selected {
     background: var(--neon-blue);
     color: var(--dark-text);
-    box-shadow: 0 0 15px var(--neon-blue);
+    box-shadow: 0 0 20px var(--neon-blue), inset 0 0 5px rgba(255,255,255,0.2);
 }
 
 .journal-history, .tracking-history {
-    margin-top: 2rem;
+    margin-top: 3rem; /* More space */
 }
 
 .journal-entry, .tracking-entry {
     background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    border: 2px solid var(--glass-border); /* Thicker border */
+    border-radius: 15px; /* More rounded */
+    padding: 2rem; /* More padding */
+    margin-bottom: 2rem; /* More space */
     position: relative;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
 .no-entries {
     text-align: center;
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: 2rem;
+    color: rgba(255, 255, 255, 0.8); /* Slightly brighter */
+    margin-top: 2.5rem;
+    font-size: 1.1rem;
+    font-style: italic;
 }
 
 .entry-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem; /* More padding */
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.3); /* Stronger dash */
 }
 
 .entry-date {
     font-weight: bold;
     color: var(--neon-green);
-    font-size: 1.1rem;
+    font-size: 1.2rem; /* Larger text */
+    text-shadow: 0 0 5px var(--neon-green);
 }
 
 .entry-mood {
-    font-size: 1.5rem;
+    font-size: 1.8rem; /* Larger emoji */
 }
 
 .entry-content {
     color: var(--light-text);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    white-space: pre-wrap; /* Preserve whitespace and line breaks */
+    line-height: 1.7; /* More relaxed line height */
+    margin-bottom: 1.2rem;
+    white-space: pre-wrap;
+    font-size: 1.05rem; /* Slightly larger text */
 }
 
 .entry-tags .tag {
     background: var(--darker-bg);
     border: 1px solid var(--light-border);
     color: var(--light-text);
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    margin-right: 8px;
-    margin-bottom: 8px;
+    padding: 0.4rem 1rem; /* More padding */
+    border-radius: 20px; /* More rounded */
+    font-size: 0.9rem; /* Slightly larger */
+    margin-right: 10px; /* More space */
+    margin-bottom: 10px;
     display: inline-block;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
 .entry-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px; /* More space */
     justify-content: flex-end;
-    margin-top: 1rem;
-    border-top: 1px dashed rgba(255, 255, 255, 0.1);
-    padding-top: 1rem;
+    margin-top: 1.5rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.2); /* Stronger dash */
+    padding-top: 1.5rem;
 }
 .delete-entry-btn {
     background: var(--danger-red);
     border: none;
     color: var(--light-text);
+    box-shadow: 0 0 15px rgba(255, 102, 102, 0.5); /* Added glow */
 }
 .delete-entry-btn:hover {
-    background: rgba(255, 77, 79, 0.8);
-    box-shadow: 0 0 15px var(--danger-red);
+    background: rgba(255, 102, 102, 0.8);
+    box-shadow: 0 0 20px var(--danger-red);
 }
 .edit-entry-btn {
-    background: var(--neon-blue); /* Distinct color for edit */
+    background: var(--neon-blue);
     border: none;
     color: var(--dark-text);
+    box-shadow: 0 0 15px rgba(133, 227, 255, 0.5); /* Added glow */
 }
 .edit-entry-btn:hover {
-    background: rgba(1, 205, 254, 0.8);
-    box-shadow: 0 0 15px var(--neon-blue);
+    background: rgba(133, 227, 255, 0.8);
+    box-shadow: 0 0 20px var(--neon-blue);
 }
 
 
 /* --- Resources Section Specific Styles --- */
 .phase-selector-wrapper {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem; /* More space */
 }
 .phase-selector-wrapper label {
-    margin-right: 1rem;
+    margin-right: 1.2rem;
     color: var(--neon-blue);
     font-weight: bold;
+    font-size: 1.1rem;
 }
 .resources-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly larger min-width */
+    gap: 2rem; /* More gap */
 }
 
 .resource-card {
-    padding: 1.5rem;
+    padding: 2rem; /* More padding */
     text-align: left;
     background: var(--darker-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 10px;
-    transition: all 0.3s ease;
+    border: 2px solid var(--glass-border); /* Thicker border */
+    border-radius: 15px; /* More rounded */
+    transition: all 0.4s ease;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
 .resource-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 20px var(--neon-blue);
+    transform: translateY(-8px); /* More pronounced lift */
+    box-shadow: 0 0 30px var(--neon-blue), inset 0 0 8px rgba(255,255,255,0.1);
 }
 
-.resource-card h4 { /* Changed to h4 as per content structure */
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
+.resource-card h4 {
+    font-size: 1.5rem; /* Larger heading */
+    margin-bottom: 1.2rem;
     color: var(--neon-pink);
-    text-shadow: 0 0 8px var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink); /* Stronger glow */
 }
 
 .resource-card p {
-    font-size: 0.95rem;
+    font-size: 1rem; /* Slightly larger */
     color: var(--light-text);
-    line-height: 1.6;
-    margin-bottom: 1rem;
+    line-height: 1.7; /* More relaxed */
+    margin-bottom: 1.2rem;
 }
 
 .resource-card .btn {
-    margin-top: 10px;
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
+    margin-top: 15px; /* More space */
+    padding: 0.8rem 1.5rem; /* Larger button */
+    font-size: 1rem;
 }
 
 
 /* --- Settings Section Specific Styles --- */
-.settings-form { /* Apply glass-card to settings form */
-    padding: 2rem;
-    margin-bottom: 2rem;
+.settings-form {
+    padding: 2.5rem; /* More padding */
+    margin-bottom: 2.5rem;
 }
 .theme-options {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    gap: 12px; /* More space */
+    margin-top: 15px;
+    margin-bottom: 25px;
 }
 .theme-btn {
     background: var(--darker-bg);
-    border: 1px solid var(--neon-pink);
+    border: 2px solid var(--neon-pink); /* Thicker border */
     color: var(--light-text);
-    padding: 0.8rem 1.2rem;
-    border-radius: 20px;
+    padding: 1rem 1.5rem; /* More padding */
+    border-radius: 25px; /* More rounded */
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     font-weight: bold;
+    font-size: 1rem; /* Slightly larger */
 }
 .theme-btn[data-theme="pink"] { border-color: var(--neon-pink); color: var(--neon-pink); }
 .theme-btn[data-theme="blue"] { border-color: var(--neon-blue); color: var(--neon-blue); }
 .theme-btn[data-theme="green"] { border-color: var(--neon-green); color: var(--neon-green); }
 
 .theme-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 10px rgba(255, 113, 206, 0.5); /* Pink hover default */
+    transform: translateY(-3px); /* More pronounced lift */
+    box-shadow: 0 0 15px rgba(255, 133, 227, 0.7); /* Stronger glow */
 }
-.theme-btn[data-theme="blue"]:hover { box-shadow: 0 0 10px rgba(1, 205, 254, 0.5); }
-.theme-btn[data-theme="green"]:hover { box-shadow: 0 0 10px rgba(5, 255, 161, 0.5); }
+.theme-btn[data-theme="blue"]:hover { box-shadow: 0 0 15px rgba(133, 227, 255, 0.7); }
+.theme-btn[data-theme="green"]:hover { box-shadow: 0 0 15px rgba(161, 255, 133, 0.7); }
 
 
 /* --- Symptom Tracker Specific Styles --- */
@@ -922,59 +961,62 @@ footer {
 }
 .symptom-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly larger min-width */
+    gap: 2rem; /* More gap */
+    margin-bottom: 2.5rem;
 }
 
 .symptom-category h3 {
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     color: var(--neon-pink);
-    text-shadow: 0 0 8px var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink);
 }
 
 .symptom-checks {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px; /* More space */
 }
 
 .symptom-check {
     display: flex;
     align-items: center;
     background: var(--darker-bg);
-    border: 1px solid var(--light-border);
-    border-radius: 20px;
-    padding: 0.5rem 1rem;
+    border: 2px solid var(--light-border); /* Thicker border */
+    border-radius: 25px; /* More rounded */
+    padding: 0.6rem 1.2rem; /* More padding */
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
 
 .symptom-check:hover {
     border-color: var(--neon-blue);
-    box-shadow: 0 0 10px rgba(1, 205, 254, 0.3);
+    box-shadow: 0 0 15px rgba(133, 227, 255, 0.5); /* Stronger glow */
+    transform: translateY(-2px);
 }
 
 .symptom-check input[type="checkbox"] {
-    margin-right: 8px;
-    appearance: none; /* Hide default checkbox */
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--neon-green);
-    border-radius: 4px;
+    margin-right: 10px;
+    appearance: none;
+    width: 22px; /* Larger checkbox */
+    height: 22px; /* Larger checkbox */
+    border: 3px solid var(--neon-green); /* Thicker border */
+    border-radius: 6px; /* More rounded */
     position: relative;
     cursor: pointer;
-    flex-shrink: 0; /* Prevent it from shrinking */
+    flex-shrink: 0;
 }
 
 .symptom-check input[type="checkbox"]:checked {
     background-color: var(--neon-green);
     border-color: var(--neon-green);
+    box-shadow: 0 0 10px var(--neon-green); /* Glow on checked */
 }
 .symptom-check input[type="checkbox"]:checked::after {
     content: '✔';
     color: var(--dark-bg);
-    font-size: 14px;
+    font-size: 16px; /* Larger checkmark */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -983,55 +1025,62 @@ footer {
 }
 
 .symptom-check label {
-    font-size: 0.95rem;
+    font-size: 1rem; /* Slightly larger */
     color: var(--light-text);
     cursor: pointer;
-    margin-bottom: 0; /* Override default label margin */
+    margin-bottom: 0;
 }
 
 /* Energy Level Slider */
 .energy-slider {
-    margin-top: 15px;
+    margin-top: 20px; /* More space */
 }
 .energy-slider label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: var(--neon-blue);
+    font-size: 1.1rem;
 }
 .energy-slider input[type="range"] {
     width: 100%;
-    -webkit-appearance: none; /* Override default */
-    background: transparent; /* Hide default track */
+    -webkit-appearance: none;
+    background: transparent;
     margin: 10px 0;
 }
 .energy-slider input[type="range"]::-webkit-slider-runnable-track {
     width: 100%;
-    height: 8px;
+    height: 10px; /* Thicker track */
     background: var(--darker-bg);
     border-radius: 5px;
-    border: 1px solid var(--neon-pink);
-    box-shadow: 0 0 5px rgba(255, 113, 206, 0.5);
+    border: 2px solid var(--neon-pink); /* Thicker border */
+    box-shadow: 0 0 8px rgba(255, 133, 227, 0.6); /* Stronger glow */
 }
 .energy-slider input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    border: 2px solid var(--neon-green);
-    height: 20px;
-    width: 20px;
+    border: 3px solid var(--neon-green); /* Thicker border */
+    height: 24px; /* Larger thumb */
+    width: 24px; /* Larger thumb */
     border-radius: 50%;
     background: var(--neon-green);
     cursor: pointer;
-    margin-top: -7px; /* Align thumb vertically */
-    box-shadow: 0 0 10px var(--neon-green);
+    margin-top: -8px; /* Align thumb vertically */
+    box-shadow: 0 0 12px var(--neon-green); /* Stronger glow */
+    transition: all 0.3s ease; /* Smooth transition on drag */
+}
+.energy-slider input[type="range"]::-webkit-slider-thumb:hover {
+    background: var(--neon-green); /* Keep same color */
+    box-shadow: 0 0 20px var(--neon-green); /* Even stronger glow on hover */
 }
 .energy-slider input[type="range"]:focus {
     outline: none;
 }
 .energy-slider #energyValue {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 15px; /* More space */
     font-weight: bold;
     color: var(--neon-green);
-    text-shadow: 0 0 5px var(--neon-green);
+    text-shadow: 0 0 8px var(--neon-green); /* Stronger glow */
+    font-size: 1.2rem; /* Larger value */
 }
 
 
@@ -1041,40 +1090,46 @@ footer {
         grid-template-columns: 1fr;
     }
     .product-info {
-        padding: 0; /* Remove horizontal padding on smaller screens */
+        padding: 0;
     }
     .container {
-        margin: 1rem;
-        padding: 1.5rem;
+        margin: 1.5rem;
+        padding: 2rem;
     }
     .main-nav {
         flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
+        gap: 1.2rem;
+        padding: 1.2rem;
     }
     .nav-links {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 1rem;
+        gap: 1.2rem;
     }
     h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+    }
+    .product-title {
+        font-size: 2rem;
     }
 }
 
 @media (max-width: 600px) {
     h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
+    }
+    .subtitle {
+        font-size: 1.1rem;
     }
     .product-title {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
     .price-tag {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
     .buy-button {
-        font-size: 1rem;
-        padding: 0.8rem 1.5rem;
+        font-size: 1.1rem;
+        padding: 1rem 2rem;
     }
     .features-grid {
         grid-template-columns: 1fr;
@@ -1084,31 +1139,42 @@ footer {
         align-items: center;
     }
     .footer-section {
-        margin: 0.5rem 0;
+        margin: 0.8rem 0;
     }
     .mood-grid, .tag-grid, .symptom-grid, .resources-grid {
         grid-template-columns: 1fr;
     }
     .mood-btn {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        padding: 0.8rem;
     }
-    .symptom-check, .energy-btn, .activity-btn, .journal-tag {
-        font-size: 0.85rem;
-        padding: 0.4rem 0.8rem;
+    .symptom-check, .journal-tag {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
     }
     .entry-header {
         flex-direction: column;
         align-items: flex-start;
     }
     .entry-mood {
-        margin-top: 0.5rem;
+        margin-top: 0.6rem;
+    }
+    .container {
+        padding: 1.5rem;
+    }
+    .nav-logo {
+        font-size: 1.6rem;
+    }
+    .nav-btn {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
     }
 }
 
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px; /* Thicker scrollbar */
 }
 
 ::-webkit-scrollbar-track {
@@ -1117,7 +1183,8 @@ footer {
 
 ::-webkit-scrollbar-thumb {
     background: var(--neon-pink);
-    border-radius: 4px;
+    border-radius: 5px; /* More rounded */
+    border: 1px solid var(--neon-purple); /* Added a subtle border */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -1126,18 +1193,23 @@ footer {
 
 /* Animations */
 @keyframes glowText {
-    0% { text-shadow: 0 0 10px var(--neon-pink); }
-    100% { text-shadow: 0 0 20px var(--neon-pink), 0 0 30px var(--neon-purple); }
+    0% { text-shadow: 0 0 15px var(--neon-pink); } /* Stronger initial glow */
+    100% { text-shadow: 0 0 25px var(--neon-pink), 0 0 40px var(--neon-purple); } /* Stronger secondary glow */
 }
 
-@keyframes scanline {
+@keyframes scanline { /* Kept as is if you use it for subtle effects */
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
 
-@keyframes shine {
+@keyframes shine { /* Button shine */
     0% { transform: translateX(-100%) rotate(45deg); }
     100% { transform: translateX(100%) rotate(45deg); }
+}
+
+@keyframes sparkle { /* New animation for a subtle sparkle effect */
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.02); }
 }
 
 /* SR Only class for accessibility */
