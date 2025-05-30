@@ -34,10 +34,3 @@
 > (Add your own later — screenshot the homepage and paste them here using `![screenshot](img-url)`)
 
 ---
-
-## 🧕 About the Creator
-
-Made with 💖 by **Hamda** — Somali Muslim student, developer, and productivity queen 👑.  
-This app is part of my vision to help women work *with* their bodies, not against them.
-
----
